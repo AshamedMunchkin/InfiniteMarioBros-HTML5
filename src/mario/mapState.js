@@ -38,71 +38,81 @@ Mario.MapState = function() {
 
 Mario.MapState.prototype = new Enjine.GameState();
 
-Mario.MapState.prototype.Enter = function() {
+Mario.MapState.prototype.enter = function() {
     this.WaterSprite = new Enjine.AnimatedSprite();
-    this.WaterSprite.Image = Enjine.Resources.Images["worldMap"];
-    this.WaterSprite.SetColumnCount(16);
-    this.WaterSprite.SetRowCount(16);
-    this.WaterSprite.AddNewSequence("loop", 14, 0, 14, 3);
-    this.WaterSprite.FramesPerSecond = 1/3;
-    this.WaterSprite.PlaySequence("loop", true);
-    this.WaterSprite.X = 0;
-    this.WaterSprite.Y = 0;
+    this.WaterSprite.image = Enjine.Resources.images["worldMap"];
+    this.WaterSprite.setColumnCount(16);
+    this.WaterSprite.setRowCount(16);
+    this.WaterSprite.addNewSequence("loop", 14, 0, 14, 3);
+    this.WaterSprite.framesPerSecond = 1/3;
+    this.WaterSprite.playSequence("loop", true);
+    this.WaterSprite.x = 0;
+    this.WaterSprite.y = 0;
+    this.WaterSprite.xPivot = 0;
+    this.WaterSprite.yPivot = 0;
     
     this.DecoSprite = new Enjine.AnimatedSprite();
-    this.DecoSprite.Image = Enjine.Resources.Images["worldMap"];
-    this.DecoSprite.SetColumnCount(16);
-    this.DecoSprite.SetRowCount(16);
-    this.DecoSprite.AddNewSequence("world0", 10, 0, 10, 3);
-    this.DecoSprite.AddNewSequence("world1", 11, 0, 11, 3);
-    this.DecoSprite.AddNewSequence("world2", 12, 0, 12, 3);
-    this.DecoSprite.AddNewSequence("world3", 13, 0, 13, 3);
-    this.DecoSprite.FramesPerSecond = 1/3;
-    this.DecoSprite.PlaySequence("world0", true);
-    this.DecoSprite.X = 0;
-    this.DecoSprite.Y = 0;
+    this.DecoSprite.image = Enjine.Resources.images["worldMap"];
+    this.DecoSprite.setColumnCount(16);
+    this.DecoSprite.setRowCount(16);
+    this.DecoSprite.addNewSequence("world0", 10, 0, 10, 3);
+    this.DecoSprite.addNewSequence("world1", 11, 0, 11, 3);
+    this.DecoSprite.addNewSequence("world2", 12, 0, 12, 3);
+    this.DecoSprite.addNewSequence("world3", 13, 0, 13, 3);
+    this.DecoSprite.framesPerSecond = 1/3;
+    this.DecoSprite.playSequence("world0", true);
+    this.DecoSprite.x = 0;
+    this.DecoSprite.y = 0;
+    this.DecoSprite.xPivot = 0;
+    this.DecoSprite.yPivot = 0;
     
     this.HelpSprite = new Enjine.AnimatedSprite();
-    this.HelpSprite.Image = Enjine.Resources.Images["worldMap"];
-    this.HelpSprite.SetColumnCount(16);
-    this.HelpSprite.SetRowCount(16);
-    this.HelpSprite.AddNewSequence("help", 7, 3, 7, 5);
-    this.HelpSprite.FramesPerSecond = 1/2;
-    this.HelpSprite.PlaySequence("help", true);
-    this.HelpSprite.X = 0;
-    this.HelpSprite.Y = 0;
+    this.HelpSprite.image = Enjine.Resources.images["worldMap"];
+    this.HelpSprite.setColumnCount(16);
+    this.HelpSprite.setRowCount(16);
+    this.HelpSprite.addNewSequence("help", 7, 3, 7, 5);
+    this.HelpSprite.framesPerSecond = 1/2;
+    this.HelpSprite.playSequence("help", true);
+    this.HelpSprite.x = 0;
+    this.HelpSprite.y = 0;
+    this.HelpSprite.xPivot = 0;
+    this.HelpSprite.yPivot = 0;
     
     this.SmallMario = new Enjine.AnimatedSprite();
-    this.SmallMario.Image = Enjine.Resources.Images["worldMap"];
-    this.SmallMario.SetColumnCount(16);
-    this.SmallMario.SetRowCount(16);
-    this.SmallMario.AddNewSequence("small", 1, 0, 1, 1);
-    this.SmallMario.FramesPerSecond = 1/3;
-    this.SmallMario.PlaySequence("small", true);
-    this.SmallMario.X = 0;
-    this.SmallMario.Y = 0;
+    this.SmallMario.image = Enjine.Resources.images["worldMap"];
+    this.SmallMario.setColumnCount(16);
+    this.SmallMario.setRowCount(16);
+    this.SmallMario.addNewSequence("small", 1, 0, 1, 1);
+    this.SmallMario.framesPerSecond = 1/3;
+    this.SmallMario.playSequence("small", true);
+    this.SmallMario.x = 0;
+    this.SmallMario.y = 0;
+    this.SmallMario.xPivot = 0;
+    this.SmallMario.yPivot = 0;
     
     this.LargeMario = new Enjine.AnimatedSprite();
-    this.LargeMario.Image = Enjine.Resources.Images["worldMap"];
-    this.LargeMario.SetColumnCount(16);
-    this.LargeMario.SetRowCount(8);
-    this.LargeMario.AddNewSequence("large", 0, 2, 0, 3);
-    this.LargeMario.AddNewSequence("fire", 0, 4, 0, 5);
-    this.LargeMario.FramesPerSecond = 1/3;
-    this.LargeMario.PlaySequence("large", true);
-    this.LargeMario.X = 0;
-    this.LargeMario.Y = 0;
+    this.LargeMario.image = Enjine.Resources.images["worldMap"];
+    this.LargeMario.setColumnCount(16);
+    this.LargeMario.setRowCount(8);
+    this.LargeMario.addNewSequence("large", 0, 2, 0, 3);
+    this.LargeMario.addNewSequence("fire", 0, 4, 0, 5);
+    this.LargeMario.framesPerSecond = 1/3;
+    this.LargeMario.playSequence("large", true);
+    this.LargeMario.x = 0;
+    this.LargeMario.y = 0;
+    this.LargeMario.xPivot = 0;
+    this.LargeMario.yPivot = 0;
     
     this.FontShadow = Mario.SpriteCuts.CreateBlackFont();
     this.Font = Mario.SpriteCuts.CreateWhiteFont();
     
     //get the correct world decoration
-    this.DecoSprite.PlaySequence("world" + (this.WorldNumber % 4), true);
+    this.DecoSprite.playSequence("world" + (this.WorldNumber % 4), true);
 
     if (!Mario.MarioCharacter.Fire) {
-        this.LargeMario.PlaySequence("large", true);
+        this.LargeMario.playSequence("large", true);
     } else {
-        this.LargeMario.PlaySequence("fire", true);
+        this.LargeMario.playSequence("fire", true);
     }
     
     this.EnterLevel = false;
@@ -112,7 +122,7 @@ Mario.MapState.prototype.Enter = function() {
 	//Mario.PlayMapMusic();
 };
 
-Mario.MapState.prototype.Exit = function() {
+Mario.MapState.prototype.exit = function() {
 	//Mario.StopMusic();
 
     delete this.WaterSprite;
@@ -378,7 +388,7 @@ Mario.MapState.prototype.Travel = function(x, y, dir, depth) {
 
 Mario.MapState.prototype.RenderStatic = function() {
     var x = 0, y = 0, p0 = 0, p1 = 0, p2 = 0, p3 = 0, s = 0, xx = 0, yy = 0,
-        image = Enjine.Resources.Images["worldMap"], type = 0;
+        image = Enjine.Resources.images["worldMap"], type = 0;
     
     //320 / 16 = 20
     for (x = 0; x < 20; x++) {
@@ -465,7 +475,7 @@ Mario.MapState.prototype.IsWater = function(x, y) {
     return true;
 };
 
-Mario.MapState.prototype.Update = function(delta) {
+Mario.MapState.prototype.update = function(delta) {
     var x = 0, y = 0, difficulty = 0, type = 0;
     
     if (this.WorldNumber === 8) {
@@ -488,7 +498,7 @@ Mario.MapState.prototype.Update = function(delta) {
         this.XMarioA = 0;
         this.YMarioA = 0;
         
-        if (this.CanEnterLevel && Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
+        if (this.CanEnterLevel && Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
             if (this.Level[x][y] === Mario.MapTile.Level && this.Data[x][y] !== -11) {
                 if (this.Level[x][y] === Mario.MapTile.Level && this.Data[x][y] !== 0 && this.Data[x][y] > -10) {
                     difficulty = this.WorldNumber + 1;
@@ -523,33 +533,33 @@ Mario.MapState.prototype.Update = function(delta) {
             }
         }
         
-        this.CanEnterLevel = !Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S);
+        this.CanEnterLevel = !Enjine.Keyboard.isKeyDown(Enjine.Keys.s);
         
-        if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Left)) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.left)) {
             this.TryWalking(-1, 0);
         }
-        if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Right)) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.right)) {
             this.TryWalking(1, 0);
         }
-        if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Up)) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.up)) {
             this.TryWalking(0, -1);
         }
-        if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.Down)) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.down)) {
             this.TryWalking(0, 1);
         }
     }
     
-    this.WaterSprite.Update(delta);
-    this.DecoSprite.Update(delta);
-    this.HelpSprite.Update(delta);
+    this.WaterSprite.update(delta);
+    this.DecoSprite.update(delta);
+    this.HelpSprite.update(delta);
     if (!Mario.MarioCharacter.Large) {
-        this.SmallMario.X = this.XMario + (this.XMarioA * delta) | 0;
-        this.SmallMario.Y = this.YMario + ((this.YMarioA * delta) | 0) - 6;
-        this.SmallMario.Update(delta);
+        this.SmallMario.x = this.XMario + (this.XMarioA * delta) | 0;
+        this.SmallMario.y = this.YMario + ((this.YMarioA * delta) | 0) - 6;
+        this.SmallMario.update(delta);
     } else {
-        this.LargeMario.X = this.XMario + (this.XMarioA * delta) | 0;
-        this.LargeMario.Y = this.YMario + ((this.YMarioA * delta) | 0) - 22;
-        this.LargeMario.Update(delta);
+        this.LargeMario.x = this.XMario + (this.XMarioA * delta) | 0;
+        this.LargeMario.y = this.YMario + ((this.YMarioA * delta) | 0) - 22;
+        this.LargeMario.update(delta);
     }
 };
 
@@ -587,7 +597,7 @@ Mario.MapState.prototype.CalcDistance = function(x, y, xa, ya) {
     }
 };
 
-Mario.MapState.prototype.Draw = function(context) {
+Mario.MapState.prototype.draw = function(context) {
     var x = 0, y = 0;
     
     if (this.WorldNumber === 8) {
@@ -600,35 +610,35 @@ Mario.MapState.prototype.Draw = function(context) {
         for (x = 20; x >= 0; x--) {
             if (this.Level[x][y] === Mario.MapTile.Water) {
                 if (this.IsWater(x * 2 - 1, y * 2 - 1)) {
-                    this.WaterSprite.X = x * 16 - 8;
-                    this.WaterSprite.Y = y * 16 - 8;
-                    this.WaterSprite.Draw(context, this.camera);
+                    this.WaterSprite.x = x * 16 - 8;
+                    this.WaterSprite.y = y * 16 - 8;
+                    this.WaterSprite.draw(context, this.camera);
                 }
             } else if (this.Level[x][y] === Mario.MapTile.Decoration) {
-                this.DecoSprite.X = x * 16;
-                this.DecoSprite.Y = y * 16;
-                this.DecoSprite.Draw(context, this.camera);
+                this.DecoSprite.x = x * 16;
+                this.DecoSprite.y = y * 16;
+                this.DecoSprite.draw(context, this.camera);
             } else if (this.Level[x][y] === Mario.MapTile.Level && this.Data[x][y] === -2) {
-                this.HelpSprite.X = x * 16 + 16;
-                this.HelpSprite.Y = y * 16 - 16;
-                this.HelpSprite.Draw(context, this.camera);
+                this.HelpSprite.x = x * 16 + 16;
+                this.HelpSprite.y = y * 16 - 16;
+                this.HelpSprite.draw(context, this.camera);
             }
         }
     }
     
     if (!Mario.MarioCharacter.Large) {
-        this.SmallMario.Draw(context, this.camera);
+        this.SmallMario.draw(context, this.camera);
     } else {
-        this.LargeMario.Draw(context, this.camera);
+        this.LargeMario.draw(context, this.camera);
     }
     
-    this.Font.Strings[0] = { String: "MARIO " + Mario.MarioCharacter.Lives, X: 4, Y: 4 };
-    this.FontShadow.Strings[0] = { String: "MARIO " + Mario.MarioCharacter.Lives, X: 5, Y: 5 };
-    this.Font.Strings[1] = { String: "WORLD " + (this.WorldNumber + 1), X: 256, Y: 4 };
-    this.FontShadow.Strings[1] = { String: "WORLD " + (this.WorldNumber + 1), X: 257, Y: 5 };
+    this.Font.strings[0] = { string: "MARIO " + Mario.MarioCharacter.Lives, x: 4, y: 4 };
+    this.FontShadow.strings[0] = { string: "MARIO " + Mario.MarioCharacter.Lives, x: 5, y: 5 };
+    this.Font.strings[1] = { string: "WORLD " + (this.WorldNumber + 1), x: 256, y: 4 };
+    this.FontShadow.strings[1] = { string: "WORLD " + (this.WorldNumber + 1), x: 257, y: 5 };
     
-    this.FontShadow.Draw(context, this.camera);
-    this.Font.Draw(context, this.camera);
+    this.FontShadow.draw(context, this.camera);
+    this.Font.draw(context, this.camera);
 };
 
 Mario.MapState.prototype.LevelWon = function() {
@@ -653,11 +663,11 @@ Mario.MapState.prototype.GetY = function() {
     return 120;
 };
 
-Mario.MapState.prototype.CheckForChange = function(context) {
+Mario.MapState.prototype.checkForChange = function(context) {
     if (this.WorldNumber === 8) {
         context.ChangeState(new Mario.WinState());
     }
     if (this.EnterLevel) {
-        context.ChangeState(new Mario.LevelState(this.LevelDifficulty, this.LevelType));
+        context.changeState(new Mario.LevelState(this.LevelDifficulty, this.LevelType));
     }
 };

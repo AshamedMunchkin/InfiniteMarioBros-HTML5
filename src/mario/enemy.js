@@ -26,7 +26,7 @@ Mario.Enemy = function(world, x, y, dir, type, winged) {
     this.Type = type;
     this.Winged = winged;
     
-    this.Image = Enjine.Resources.Images["enemies"];
+    this.Image = Enjine.Resources.images["enemies"];
     
     this.XPicO = 8;
     this.YPicO = 31;
@@ -353,7 +353,7 @@ Mario.Enemy.prototype.BumpCheck = function(xTile, yTile) {
 
 Mario.Enemy.prototype.SubDraw = Mario.NotchSprite.prototype.Draw;
 
-Mario.Enemy.prototype.Draw = function(context, camera) {
+Mario.Enemy.prototype.draw = function(context, camera) {
     var xPixel = 0, yPixel = 0;
     
     if (this.Winged) {

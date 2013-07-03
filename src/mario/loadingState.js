@@ -14,7 +14,7 @@ Mario.LoadingState = function() {
 
 Mario.LoadingState.prototype = new Enjine.GameState();
 
-Mario.LoadingState.prototype.Enter = function() {
+Mario.LoadingState.prototype.enter = function() {
     var i = 0;
     for (i = 0; i < 15; i++) {
         this.Images[i] = {};
@@ -52,61 +52,61 @@ Mario.LoadingState.prototype.Enter = function() {
     this.Images[13].src = "images/title.gif";
     this.Images[14].src = "images/worldmap.png";
     
-    Enjine.Resources.AddImages(this.Images);
+    Enjine.Resources.addImages(this.Images);
     
     var testAudio = new Audio();
 	
     if (testAudio.canPlayType("audio/mp3")) {
-    	Enjine.Resources.AddSound("1up", "sounds/1-up.mp3", 1)
-		    .AddSound("breakblock", "sounds/breakblock.mp3")
-		    .AddSound("bump", "sounds/bump.mp3", 4)
-		    .AddSound("cannon", "sounds/cannon.mp3")
-		    .AddSound("coin", "sounds/coin.mp3", 5)
-		    .AddSound("death", "sounds/death.mp3", 1)
-		    .AddSound("exit", "sounds/exit.mp3", 1)
-		    .AddSound("fireball", "sounds/fireball.mp3", 1)
-		    .AddSound("jump", "sounds/jump.mp3")
-		    .AddSound("kick", "sounds/kick.mp3")
-		    .AddSound("pipe", "sounds/pipe.mp3", 1)
-		    .AddSound("powerdown", "sounds/powerdown.mp3", 1)
-		    .AddSound("powerup", "sounds/powerup.mp3", 1)
-		    .AddSound("sprout", "sounds/sprout.mp3", 1)
-		    .AddSound("stagestart", "sounds/stagestart.mp3", 1)
-		    .AddSound("stomp", "sounds/stomp.mp3", 2);
+    	Enjine.Resources.addSound("1up", "sounds/1-up.mp3", 1)
+		    .addSound("breakblock", "sounds/breakblock.mp3")
+		    .addSound("bump", "sounds/bump.mp3", 4)
+		    .addSound("cannon", "sounds/cannon.mp3")
+		    .addSound("coin", "sounds/coin.mp3", 5)
+		    .addSound("death", "sounds/death.mp3", 1)
+		    .addSound("exit", "sounds/exit.mp3", 1)
+		    .addSound("fireball", "sounds/fireball.mp3", 1)
+		    .addSound("jump", "sounds/jump.mp3")
+		    .addSound("kick", "sounds/kick.mp3")
+		    .addSound("pipe", "sounds/pipe.mp3", 1)
+		    .addSound("powerdown", "sounds/powerdown.mp3", 1)
+		    .addSound("powerup", "sounds/powerup.mp3", 1)
+		    .addSound("sprout", "sounds/sprout.mp3", 1)
+		    .addSound("stagestart", "sounds/stagestart.mp3", 1)
+		    .addSound("stomp", "sounds/stomp.mp3", 2);
     } else {
-	    Enjine.Resources.AddSound("1up", "sounds/1-up.wav", 1)
-		    .AddSound("breakblock", "sounds/breakblock.wav")
-		    .AddSound("bump", "sounds/bump.wav", 2)
-		    .AddSound("cannon", "sounds/cannon.wav")
-		    .AddSound("coin", "sounds/coin.wav", 5)
-		    .AddSound("death", "sounds/death.wav", 1)
-		    .AddSound("exit", "sounds/exit.wav", 1)
-		    .AddSound("fireball", "sounds/fireball.wav", 1)
-		    .AddSound("jump", "sounds/jump.wav", 1)
-		    .AddSound("kick", "sounds/kick.wav", 1)
-		    .AddSound("message", "sounds/message.wav", 1)
-		    .AddSound("pipe", "sounds/pipe.wav", 1)
-		    .AddSound("powerdown", "sounds/powerdown.wav", 1)
-		    .AddSound("powerup", "sounds/powerup.wav", 1)
-		    .AddSound("sprout", "sounds/sprout.wav", 1)
-		    .AddSound("stagestart", "sounds/stagestart.wav", 1)
-		    .AddSound("stomp", "sounds/stomp.wav", 1);
+	    Enjine.Resources.addSound("1up", "sounds/1-up.wav", 1)
+		    .addSound("breakblock", "sounds/breakblock.wav")
+		    .addSound("bump", "sounds/bump.wav", 2)
+		    .addSound("cannon", "sounds/cannon.wav")
+		    .addSound("coin", "sounds/coin.wav", 5)
+		    .addSound("death", "sounds/death.wav", 1)
+		    .addSound("exit", "sounds/exit.wav", 1)
+		    .addSound("fireball", "sounds/fireball.wav", 1)
+		    .addSound("jump", "sounds/jump.wav", 1)
+		    .addSound("kick", "sounds/kick.wav", 1)
+		    .addSound("message", "sounds/message.wav", 1)
+		    .addSound("pipe", "sounds/pipe.wav", 1)
+		    .addSound("powerdown", "sounds/powerdown.wav", 1)
+		    .addSound("powerup", "sounds/powerup.wav", 1)
+		    .addSound("sprout", "sounds/sprout.wav", 1)
+		    .addSound("stagestart", "sounds/stagestart.wav", 1)
+		    .addSound("stomp", "sounds/stomp.wav", 1);
     }
     
     //load the array of tile behaviors
     Mario.Tile.LoadBehaviors();
 };
 
-Mario.LoadingState.prototype.Exit = function() {
+Mario.LoadingState.prototype.exit = function() {
     delete this.Images;
 };
 
-Mario.LoadingState.prototype.Update = function(delta) {
+Mario.LoadingState.prototype.update = function(delta) {
     if (!this.ImagesLoaded) {
         this.ImagesLoaded = true;
         var i = 0;
         for (i = 0; i < this.Images.length; i++) {
-            if (Enjine.Resources.Images[this.Images[i].name].complete !== true) {
+            if (Enjine.Resources.images[this.Images[i].name].complete !== true) {
                 this.ImagesLoaded = false;
                 break;
             }
@@ -123,7 +123,7 @@ Mario.LoadingState.prototype.Update = function(delta) {
     }
 };
 
-Mario.LoadingState.prototype.Draw = function(context) {
+Mario.LoadingState.prototype.draw = function(context) {
     if (!this.ImagesLoaded) {
         var color = parseInt(this.ScreenColor, 10);
         context.fillStyle = "rgb(" + color + "," + color + "," + color + ")";
@@ -134,11 +134,11 @@ Mario.LoadingState.prototype.Draw = function(context) {
     }
 };
 
-Mario.LoadingState.prototype.CheckForChange = function(context) {
+Mario.LoadingState.prototype.checkForChange = function(context) {
     if (this.ImagesLoaded) {
 		//set up the global map state variable
 		Mario.GlobalMapState = new Mario.MapState();
 	
-        context.ChangeState(new Mario.TitleState());
+        context.changeState(new Mario.TitleState());
     }
 };

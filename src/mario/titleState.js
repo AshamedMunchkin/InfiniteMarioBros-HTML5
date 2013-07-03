@@ -13,7 +13,7 @@ Mario.TitleState = function() {
 
 Mario.TitleState.prototype = new Enjine.GameState();
 
-Mario.TitleState.prototype.Enter = function() {
+Mario.TitleState.prototype.enter = function() {
     this.drawManager = new Enjine.DrawableManager();
     this.camera = new Enjine.Camera();
     
@@ -23,60 +23,60 @@ Mario.TitleState.prototype.Enter = function() {
     var bgLayer1 = new Mario.BackgroundRenderer(bgGenerator.CreateLevel(), 320, 240, 1);
     
     this.title = new Enjine.Sprite();
-    this.title.Image = Enjine.Resources.Images["title"];
-    this.title.X = 0, this.title.Y = 120;
+    this.title.image = Enjine.Resources.images["title"];
+    this.title.x = 0, this.title.y = 120;
     
     this.logo = new Enjine.Sprite();
-    this.logo.Image = Enjine.Resources.Images["logo"];
-    this.logo.X = 0, this.logo.Y = 0;
+    this.logo.image = Enjine.Resources.images["logo"];
+    this.logo.x = 0, this.logo.y = 0;
     
     this.font = Mario.SpriteCuts.CreateRedFont();
-    this.font.Strings[0] = { String: "Press S to Start", X: 96, Y: 120 };
+    this.font.strings[0] = { string: "Press S to Start", x: 96, y: 120 };
 
     this.logoY = 20;
     
-    this.drawManager.Add(bgLayer0);
-    this.drawManager.Add(bgLayer1);
+    this.drawManager.add(bgLayer0);
+    this.drawManager.add(bgLayer1);
     
     this.bounce = 0;
 	
 	Mario.GlobalMapState = new Mario.MapState();
 	//set up the global main character variable
 	Mario.MarioCharacter = new Mario.Character();
-	Mario.MarioCharacter.Image = Enjine.Resources.Images["smallMario"];
+	Mario.MarioCharacter.Image = Enjine.Resources.images["smallMario"];
 	
 	//Mario.PlayTitleMusic();
 };
 
-Mario.TitleState.prototype.Exit = function() {
+Mario.TitleState.prototype.exit = function() {
 	//Mario.StopMusic();
 	
-    this.drawManager.Clear();
+    this.drawManager.clear();
     delete this.drawManager;
     delete this.camera;
     delete this.font;
 };
 
-Mario.TitleState.prototype.Update = function(delta) {
+Mario.TitleState.prototype.update = function(delta) {
     this.bounce += delta * 2;
     this.logoY = 20 + Math.sin(this.bounce) * 10;
     
-    this.camera.X += delta * 25;
+    this.camera.x += delta * 25;
     
-    this.drawManager.Update(delta);
+    this.drawManager.update(delta);
 };
 
-Mario.TitleState.prototype.Draw = function(context) {
-    this.drawManager.Draw(context, this.camera);
+Mario.TitleState.prototype.draw = function(context) {
+    this.drawManager.draw(context, this.camera);
     
-    context.drawImage(Enjine.Resources.Images["title"], 0, 120);
-    context.drawImage(Enjine.Resources.Images["logo"], 0, this.logoY);
+    context.drawImage(Enjine.Resources.images["title"], 0, 120);
+    context.drawImage(Enjine.Resources.images["logo"], 0, this.logoY);
     
-    this.font.Draw(context, this.Camera);
+    this.font.draw(context, this.camera);
 };
 
-Mario.TitleState.prototype.CheckForChange = function(context) {
-    if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
-        context.ChangeState(Mario.GlobalMapState);
+Mario.TitleState.prototype.checkForChange = function(context) {
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
+        context.changeState(Mario.GlobalMapState);
     }
 };

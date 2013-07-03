@@ -13,7 +13,7 @@ Mario.LoseState = function() {
 
 Mario.LoseState.prototype = new Enjine.GameState();
 
-Mario.LoseState.prototype.Enter = function() {
+Mario.LoseState.prototype.enter = function() {
     this.drawManager = new Enjine.DrawableManager();
     this.camera = new Enjine.Camera();
     
@@ -34,7 +34,7 @@ Mario.LoseState.prototype.Enter = function() {
     this.drawManager.Add(this.gameOver);
 };
 
-Mario.LoseState.prototype.Exit = function() {
+Mario.LoseState.prototype.exit = function() {
     this.drawManager.Clear();
     delete this.drawManager;
     delete this.camera;
@@ -42,18 +42,18 @@ Mario.LoseState.prototype.Exit = function() {
     delete this.font;
 };
 
-Mario.LoseState.prototype.Update = function(delta) {
+Mario.LoseState.prototype.update = function(delta) {
     this.drawManager.Update(delta);
     if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
         this.wasKeyDown = true;
     }
 };
 
-Mario.LoseState.prototype.Draw = function(context) {
+Mario.LoseState.prototype.draw = function(context) {
     this.drawManager.Draw(context, this.camera);
 };
 
-Mario.LoseState.prototype.CheckForChange = function(context) {
+Mario.LoseState.prototype.checkForChange = function(context) {
     if (this.wasKeyDown && !Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
         context.ChangeState(new Mario.TitleState());
     }

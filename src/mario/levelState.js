@@ -34,7 +34,7 @@ Mario.LevelState = function(difficulty, type) {
 
 Mario.LevelState.prototype = new Enjine.GameState();
 
-Mario.LevelState.prototype.Enter = function() {
+Mario.LevelState.prototype.enter = function() {
     var levelGenerator = new Mario.LevelGenerator(320, 15), i = 0, scrollSpeed = 0, w = 0, h = 0, bgLevelGenerator = null;
     this.Level = levelGenerator.CreateLevel(this.LevelType, this.LevelDifficulty);
     
@@ -71,7 +71,7 @@ Mario.LevelState.prototype.Enter = function() {
     
     Mario.MarioCharacter.Initialize(this);
 
-    this.Sprites.Add(Mario.MarioCharacter);
+    this.Sprites.add(Mario.MarioCharacter);
     this.StartTime = 1;
     this.TimeLeft = 200;
 	
@@ -79,7 +79,7 @@ Mario.LevelState.prototype.Enter = function() {
 	this.GotoLoseState = false;
 };
 
-Mario.LevelState.prototype.Exit = function() {
+Mario.LevelState.prototype.exit = function() {
 	
     delete this.Level;
     delete this.Layer;
@@ -100,7 +100,7 @@ Mario.LevelState.prototype.CheckFireballCollide = function(fireball) {
     this.FireballsToCheck.push(fireball);
 };
 
-Mario.LevelState.prototype.Update = function(delta) {
+Mario.LevelState.prototype.update = function(delta) {
     var i = 0, j = 0, xd = 0, yd = 0, sprite = null, hasShotCannon = false, xCannon = 0, x = 0, y = 0,
         dir = 0, st = null, b = 0;
     
@@ -125,13 +125,13 @@ Mario.LevelState.prototype.Update = function(delta) {
     
     this.FireballsOnScreen = 0;
     
-    for (i = 0; i < this.Sprites.Objects.length; i++) {
-        sprite = this.Sprites.Objects[i];
+    for (i = 0; i < this.Sprites.objects.length; i++) {
+        sprite = this.Sprites.objects[i];
         if (sprite !== Mario.MarioCharacter) {
             xd = sprite.X - this.Camera.X;
             yd = sprite.Y - this.Camera.Y;
             if (xd < -64 || xd > 320 + 64 || yd < -64 || yd > 240 + 64) {
-                this.Sprites.RemoveAt(i);
+                this.Sprites.removeAt(i);
             } else {
                 if (sprite instanceof Mario.Fireball) {
                     this.FireballsOnScreen++;
@@ -141,11 +141,11 @@ Mario.LevelState.prototype.Update = function(delta) {
     }
     
     if (this.Paused) {
-        for (i = 0; i < this.Sprites.Objects.length; i++) {
-            if (this.Sprites.Objects[i] === Mario.MarioCharacter) {
-                this.Sprites.Objects[i].Update(delta);
+        for (i = 0; i < this.Sprites.objects.length; i++) {
+            if (this.Sprites.objects[i] === Mario.MarioCharacter) {
+                this.Sprites.objects[i].Update(delta);
             } else {
-                this.Sprites.Objects[i].UpdateNoMove(delta);
+                this.Sprites.objects[i].UpdateNoMove(delta);
             }
         }
     } else {
@@ -171,7 +171,7 @@ Mario.LevelState.prototype.Update = function(delta) {
                 
                 if (st !== null) {
                     if (st.LastVisibleTick !== this.Tick - 1) {
-                        if (st.Sprite === null || !this.Sprites.Contains(st.Sprite)) {
+                        if (st.Sprite === null || !this.Sprites.contains(st.Sprite)) {
                             st.Spawn(this, x, y, dir);
                         }
                     }
@@ -201,18 +201,18 @@ Mario.LevelState.prototype.Update = function(delta) {
             Enjine.Resources.PlaySound("cannon");
         }
         
-        for (i = 0; i < this.Sprites.Objects.length; i++) {
-            this.Sprites.Objects[i].Update(delta);
+        for (i = 0; i < this.Sprites.objects.length; i++) {
+            this.Sprites.objects[i].update(delta);
         }
         
-        for (i = 0; i < this.Sprites.Objects.length; i++) {
-            this.Sprites.Objects[i].CollideCheck();
+        for (i = 0; i < this.Sprites.objects.length; i++) {
+            this.Sprites.objects[i].CollideCheck();
         }
         
         for (i = 0; i < this.ShellsToCheck.length; i++) {
-            for (j = 0; j < this.Sprites.Objects.length; j++) {
-                if (this.Sprites.Objects[j] !== this.ShellsToCheck[i] && !this.ShellsToCheck[i].Dead) {
-                    if (this.Sprites.Objects[j].ShellCollideCheck(this.ShellsToCheck[i])) {
+            for (j = 0; j < this.Sprites.objects.length; j++) {
+                if (this.Sprites.objects[j] !== this.ShellsToCheck[i] && !this.ShellsToCheck[i].Dead) {
+                    if (this.Sprites.objects[j].ShellCollideCheck(this.ShellsToCheck[i])) {
                         if (Mario.MarioCharacter.Carried === this.ShellsToCheck[i] && !this.ShellsToCheck[i].Dead) {
                             Mario.MarioCharacter.Carried = null;
                             this.ShellsToCheck[i].Die();
@@ -224,9 +224,9 @@ Mario.LevelState.prototype.Update = function(delta) {
         this.ShellsToCheck.length = 0;
         
         for (i = 0; i < this.FireballsToCheck.length; i++) {
-            for (j = 0; j < this.Sprites.Objects.length; j++) {
-                if (this.Sprites.Objects[j] !== this.FireballsToCheck[i] && !this.FireballsToCheck[i].Dead) {
-                    if (this.Sprites.Objects[j].FireballCollideCheck(this.FireballsToCheck[i])) {
+            for (j = 0; j < this.Sprites.objects.length; j++) {
+                if (this.Sprites.objects[j] !== this.FireballsToCheck[i] && !this.FireballsToCheck[i].Dead) {
+                    if (this.Sprites.objects[j].FireballCollideCheck(this.FireballsToCheck[i])) {
                         this.FireballsToCheck[i].Die();
                     }
                 }
@@ -236,8 +236,8 @@ Mario.LevelState.prototype.Update = function(delta) {
         this.FireballsToCheck.length = 0;
     }
     
-    this.Sprites.AddRange(this.SpritesToAdd);
-    this.Sprites.RemoveList(this.SpritesToRemove);
+    this.Sprites.addRange(this.SpritesToAdd);
+    this.Sprites.removeList(this.SpritesToRemove);
     this.SpritesToAdd.length = 0;
     this.SpritesToRemove.length = 0;
     
@@ -245,7 +245,7 @@ Mario.LevelState.prototype.Update = function(delta) {
     this.Camera.Y = (Mario.MarioCharacter.YOld + (Mario.MarioCharacter.Y - Mario.MarioCharacter.YOld) * delta) - 120;
 };
 
-Mario.LevelState.prototype.Draw = function(context) {
+Mario.LevelState.prototype.draw = function(context) {
     var i = 0, time = 0, t = 0;
     
     if (this.Camera.X < 0) {
@@ -267,9 +267,9 @@ Mario.LevelState.prototype.Draw = function(context) {
     
     context.save();
     context.translate(-this.Camera.X, -this.Camera.Y);
-    for (i = 0; i < this.Sprites.Objects.length; i++) {
-        if (this.Sprites.Objects[i].Layer === 0) {
-            this.Sprites.Objects[i].Draw(context, this.Camera);
+    for (i = 0; i < this.Sprites.objects.length; i++) {
+        if (this.Sprites.objects[i].Layer === 0) {
+            this.Sprites.objects[i].Draw(context, this.Camera);
         }
     }
     context.restore();
@@ -279,9 +279,9 @@ Mario.LevelState.prototype.Draw = function(context) {
     
     context.save();
     context.translate(-this.Camera.X, -this.Camera.Y);
-    for (i = 0; i < this.Sprites.Objects.length; i++) {
-        if (this.Sprites.Objects[i].Layer === 1) {
-            this.Sprites.Objects[i].Draw(context, this.Camera);
+    for (i = 0; i < this.Sprites.objects.length; i++) {
+        if (this.Sprites.objects[i].Layer === 1) {
+            this.Sprites.objects[i].Draw(context, this.Camera);
         }
     }
     context.restore();
@@ -401,11 +401,11 @@ Mario.LevelState.prototype.RenderBlackout = function(context, x, y, radius) {
 };
 
 Mario.LevelState.prototype.AddSprite = function(sprite) {
-    this.Sprites.Add(sprite);
+    this.Sprites.add(sprite);
 };
 
 Mario.LevelState.prototype.RemoveSprite = function(sprite) {
-    this.Sprites.Remove(sprite);
+    this.Sprites.remove(sprite);
 };
 
 Mario.LevelState.prototype.Bump = function(x, y, canBreakBricks) {
@@ -453,12 +453,12 @@ Mario.LevelState.prototype.BumpInto = function(x, y) {
         this.AddSprite(new Mario.CoinAnim(x, y + 1));
     }
     
-    for (i = 0; i < this.Sprites.Objects.length; i++) {
-        this.Sprites.Objects[i].BumpCheck(x, y);
+    for (i = 0; i < this.Sprites.objects.length; i++) {
+        this.Sprites.objects[i].BumpCheck(x, y);
     }
 };
 
-Mario.LevelState.prototype.CheckForChange = function(context) {
+Mario.LevelState.prototype.checkForChange = function(context) {
 	if (this.GotoLoseState) {
 		context.ChangeState(new Mario.LoseState());
 	}

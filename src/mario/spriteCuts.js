@@ -9,35 +9,35 @@ Mario.SpriteCuts = {
      * Font related
      ********************/         
     CreateBlackFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(0));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(0));
     },
     
     CreateRedFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(8));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(8));
     },
     
     CreateGreenFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(16));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(16));
     },
     
     CreateBlueFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(24));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(24));
     },
     
     CreateYellowFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(32));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(32));
     },
     
     CreatePinkFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(40));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(40));
     },
     
     CreateCyanFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(48));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(48));
     },
     
     CreateWhiteFont: function() {
-        return new Enjine.SpriteFont([], Enjine.Resources.Images["font"], 8, 8, this.GetCharArray(56));
+        return new Enjine.SpriteFont(Enjine.Resources.images["font"], 8, 8, this.GetCharArray(56));
     },
     
     GetCharArray: function(y) {
@@ -54,7 +54,7 @@ Mario.SpriteCuts = {
      ********************/
     GetBackgroundSheet: function() {
         var sheet = [];
-        var x = 0, y = 0, width = Enjine.Resources.Images["background"].width / 32, height = Enjine.Resources.Images["background"].height / 32;
+        var x = 0, y = 0, width = Enjine.Resources.images["background"].width / 32, height = Enjine.Resources.images["background"].height / 32;
         
         for (x = 0; x < width; x++) {
             sheet[x] = [];
@@ -67,7 +67,7 @@ Mario.SpriteCuts = {
     },
     
     GetLevelSheet: function() {
-        var sheet = [], x = 0, y = 0, width = Enjine.Resources.Images["map"].width / 16, height = Enjine.Resources.Images["map"].height / 16;
+        var sheet = [], x = 0, y = 0, width = Enjine.Resources.images["map"].width / 16, height = Enjine.Resources.images["map"].height / 16;
         
         for (x = 0; x < width; x++) {
             sheet[x] = [];

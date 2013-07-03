@@ -25,7 +25,7 @@ Mario.LevelRenderer.prototype.Update = function(delta) {
     this.Delta = delta;
 };
 
-Mario.LevelRenderer.prototype.Draw = function(context, camera) {
+Mario.LevelRenderer.prototype.draw = function(context, camera) {
     this.DrawStatic(context, camera);
     this.DrawDynamic(context, camera);
 };

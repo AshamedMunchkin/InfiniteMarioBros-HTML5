@@ -14,7 +14,7 @@ Mario.WinState = function() {
 
 Mario.WinState.prototype = new Enjine.GameState();
 
-Mario.WinState.prototype.Enter = function() {
+Mario.WinState.prototype.enter = function() {
     this.drawManager = new Enjine.DrawableManager();
     this.camera = new Enjine.Camera();
     
@@ -37,13 +37,13 @@ Mario.WinState.prototype.Enter = function() {
     this.drawManager.Add(this.kissing);
 };
 
-Mario.WinState.prototype.Exit = function() {
+Mario.WinState.prototype.exit = function() {
     this.drawManager.Clear();
     delete this.drawManager;
     delete this.camera;
 };
 
-Mario.WinState.prototype.Update = function(delta) {
+Mario.WinState.prototype.update = function(delta) {
     this.drawManager.Update(delta);
     
     if (this.waitTime > 0) {
@@ -55,11 +55,11 @@ Mario.WinState.prototype.Update = function(delta) {
     }
 };
 
-Mario.WinState.prototype.Draw = function(context) {
+Mario.WinState.prototype.draw = function(context) {
     this.drawManager.Draw(context, this.camera);
 };
 
-Mario.WinState.prototype.CheckForChange = function(context) {
+Mario.WinState.prototype.checkForChange = function(context) {
     if (this.waitTime <= 0) {
         if (this.wasKeyDown && !Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
             context.ChangeState(new Mario.TitleState());

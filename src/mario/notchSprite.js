@@ -21,7 +21,7 @@ Mario.NotchSprite = function(image) {
 
 Mario.NotchSprite.prototype = new Enjine.Drawable();
 
-Mario.NotchSprite.prototype.Draw = function(context, camera) {
+Mario.NotchSprite.prototype.draw = function(context, camera) {
     var xPixel = 0, yPixel = 0;
     if (!this.Visible) {
         return;

@@ -14,7 +14,7 @@ Mario.BackgroundRenderer = function(level, width, height, distance) {
 
 Mario.BackgroundRenderer.prototype = new Enjine.Drawable();
 
-Mario.BackgroundRenderer.prototype.Draw = function(context, camera) {
+Mario.BackgroundRenderer.prototype.draw = function(context, camera) {
     var xCam = camera.X / this.Distance;
     var x = 0, y = 0, b = null, frame = null;
     
@@ -29,7 +29,7 @@ Mario.BackgroundRenderer.prototype.Draw = function(context, camera) {
             frame = this.Background[b % 8][(b / 8) | 0];
             
             //bitshifting by five is the same as multiplying by 32
-            context.drawImage(Enjine.Resources.Images["background"], frame.X, frame.Y, frame.Width, frame.Height, ((x << 5) - xCam) | 0, (y << 5) | 0, frame.Width, frame.Height);
+            context.drawImage(Enjine.Resources.images["background"], frame.X, frame.Y, frame.Width, frame.Height, ((x << 5) - xCam) | 0, (y << 5) | 0, frame.Width, frame.Height);
         }
     }
 };
