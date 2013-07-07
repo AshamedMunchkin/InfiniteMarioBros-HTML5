@@ -4,196 +4,196 @@
 */
 
 Mario.Fireball = function(world, x, y, facing) {
-	this.GroundInertia = 0.89;
-	this.AirInertia = 0.89;
+	this.groundInertia = 0.89;
+	this.airInertia = 0.89;
 	
-	this.Image = Enjine.Resources.Images["particles"];
+	this.image = Enjine.Resources.images["particles"];
 	
-	this.World = world;
-	this.X = x;
-	this.Y = y;
-	this.Facing = facing;
+	this.world = world;
+	this.x = x;
+	this.y = y;
+	this.facing = facing;
 	
-	this.XPicO = 4;
-	this.YPicO = 4;
-	this.YPic = 3;
-	this.XPic = 4;
-	this.Height = 8;
-	this.Width = 4;
-	this.PicWidth = this.PicHeight = 8;
-	this.Ya = 4;
-	this.Dead = false;
-	this.DeadTime = 0;
-	this.Anim = 0;
-	this.OnGround = false;
+	this.xPicO = 4;
+	this.yPicO = 4;
+	this.yPic = 3;
+	this.xPic = 4;
+	this.height = 8;
+	this.width = 4;
+	this.picWidth = this.picHeight = 8;
+	this.ya = 4;
+	this.dead = false;
+	this.deadTime = 0;
+	this.anim = 0;
+	this.onGround = false;
 };
 
 Mario.Fireball.prototype = new Mario.NotchSprite();
 
-Mario.Fireball.prototype.Move = function() {
+Mario.Fireball.prototype.move = function() {
 	var i = 0, sideWaysSpeed = 8;
 	
-	if (this.DeadTime > 0) {
+	if (this.deadTime > 0) {
 		for (i = 0; i < 8; i++) {
-			this.World.AddSprite(new Mario.Sparkle(this.World, ((this.X + Math.random() * 8 - 4) | 0) + 4, ((this.Y + Math.random() * 8 - 4) | 0) + 2, Math.random() * 2 - 1 * this.Facing, Math.random() * 2 - 1, 0, 1, 5));
+			this.world.addSprite(new Mario.Sparkle(this.world, ((this.x + Math.random() * 8 - 4) | 0) + 4, ((this.y + Math.random() * 8 - 4) | 0) + 2, Math.random() * 2 - 1 * this.facing, Math.random() * 2 - 1, 0, 1, 5));
 		}
-		this.World.RemoveSprite(this);
+		this.world.removeSprite(this);
 		return;
 	}
 	
-	if (this.Facing != 0) {
-		this.Anim++;
+	if (this.facing != 0) {
+		this.anim++;
 	}
 	
-	if (this.Xa > 2) {
-		this.Facing = 1;
+	if (this.xa > 2) {
+		this.facing = 1;
 	}
-	if (this.Xa < -2) {
-		this.Facing = -1;
-	}
-	
-	this.Xa = this.Facing * sideWaysSpeed;
-	
-	this.World.CheckFireballCollide(this);
-	
-	this.FlipX = this.Facing === -1;
-	
-	this.XPic = this.Anim % 4;
-	
-	if (!this.SubMove(this.Xa, 0)) {
-		this.Die();
+	if (this.xa < -2) {
+		this.facing = -1;
 	}
 	
-	this.OnGround = false;
-	this.SubMove(0, this.Ya);
-	if (this.OnGround) {
-		this.Ya = -10;
+	this.xa = this.facing * sideWaysSpeed;
+	
+	this.world.checkFireballCollide(this);
+	
+	this.flipX = this.facing === -1;
+	
+	this.xPic = this.anim % 4;
+	
+	if (!this.subMove(this.xa, 0)) {
+		this.die();
 	}
 	
-	this.Ya *= 0.95;
-	if (this.OnGround) {
-		this.Xa *= this.GroundInertia;
+	this.onGround = false;
+	this.subMove(0, this.ya);
+	if (this.onGround) {
+		this.ya = -10;
+	}
+	
+	this.ya *= 0.95;
+	if (this.onGround) {
+		this.xa *= this.groundInertia;
 	} else {
-		this.Xa *= this.AirInertia;
+		this.xa *= this.airInertia;
 	}
 	
-	if (!this.OnGround) {
-		this.Ya += 1.5;
+	if (!this.onGround) {
+		this.ya += 1.5;
 	}
 };
 
-Mario.Fireball.prototype.SubMove = function(xa, ya) {
+Mario.Fireball.prototype.subMove = function(xa, ya) {
     var collide = false;
     
     while (xa > 8) {
-        if (!this.SubMove(8, 0)) {
+        if (!this.subMove(8, 0)) {
             return false;
         }
         xa -= 8;
     }
     while (xa < -8) {
-        if (!this.SubMove(-8, 0)) {
+        if (!this.subMove(-8, 0)) {
             return false;
         }
         xa += 8;
     }
     while (ya > 8) {
-        if (!this.SubMove(0, 8)) {
+        if (!this.subMove(0, 8)) {
             return false;
         }
         ya -= 8;
     }
     while (ya < -8) {
-        if (!this.SubMove(0, -8)) {
+        if (!this.subMove(0, -8)) {
             return false;
         }
         ya += 8;
     }
     
     if (ya > 0) {
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, 0)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, 0)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa - this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
         }
     }
     if (ya < 0) {
-        if (this.IsBlocking(this.X + xa, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
     }
     
     if (xa > 0) {
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, ya)) {
             collide = true;
         }
     }
     if (xa < 0) {
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, ya)) {
             collide = true;
         }
     }
     
     if (collide) {
         if (xa < 0) {
-            this.X = (((this.X - this.Width) / 16) | 0) * 16 + this.Width;
-            this.Xa = 0;
+            this.x = (((this.x - this.width) / 16) | 0) * 16 + this.width;
+            this.xa = 0;
         }
         if (xa > 0) {
-            this.X = (((this.X + this.Width) / 16 + 1) | 0) * 16 - this.Width - 1;
-            this.Xa = 0;
+            this.x = (((this.x + this.width) / 16 + 1) | 0) * 16 - this.width - 1;
+            this.xa = 0;
         }
         if (ya < 0) {
-            this.Y = (((this.Y - this.Height) / 16) | 0) * 16 + this.Height;
-            this.Ya = 0;
+            this.y = (((this.y - this.height) / 16) | 0) * 16 + this.height;
+            this.ya = 0;
         }
         if (ya > 0) {
-            this.Y = (((this.Y - 1) / 16 + 1) | 0) * 16 - 1;
-            this.OnGround = true;
+            this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
+            this.onGround = true;
         }
         
         return false;
     } else {
-        this.X += xa;
-        this.Y += ya;
+        this.x += xa;
+        this.y += ya;
         return true;
     }
 };
 
-Mario.Fireball.prototype.IsBlocking = function(x, y, xa, ya) {
+Mario.Fireball.prototype.isBlocking = function(x, y, xa, ya) {
     x = (x / 16) | 0;
     y = (y / 16) | 0;
     
-    if (x === (this.X / 16) | 0 && y === (this.Y / 16) | 0) {
+    if (x === (this.x / 16) | 0 && y === (this.y / 16) | 0) {
         return false;
     }
     
-    return this.World.Level.IsBlocking(x, y, xa, ya);
+    return this.world.level.isBlocking(x, y, xa, ya);
 };
 
-Mario.Fireball.prototype.Die = function() {
-	this.Dead = true;
-	this.Xa = -this.Facing * 2;
-	this.Ya = -5;
-	this.DeadTime = 100;
+Mario.Fireball.prototype.die = function() {
+	this.dead = true;
+	this.xa = -this.facing * 2;
+	this.ya = -5;
+	this.deadTime = 100;
 };

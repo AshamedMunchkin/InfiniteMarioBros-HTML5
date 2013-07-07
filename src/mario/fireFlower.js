@@ -4,42 +4,42 @@
 */
 
 Mario.FireFlower = function(world, x, y) {
-	this.Width = 4;
-	this.Height = 24;
+	this.width = 4;
+	this.height = 24;
 	
-	this.World = world;
-	this.X = x;
-	this.Y = y;
-	this.Image = Enjine.Resources.Images["items"];
+	this.world = world;
+	this.x = x;
+	this.y = y;
+	this.image = Enjine.Resources.images["items"];
 	
-	this.XPicO = 8;
-	this.YPicO = 15;
-	this.XPic = 1;
-	this.YPic = 0;
-	this.Height = 12;
-	this.Facing = 1;
-	this.PicWidth = this.PicHeight = 16;
+	this.xPicO = 8;
+	this.yPicO = 15;
+	this.xPic = 1;
+	this.yPic = 0;
+	this.height = 12;
+	this.facing = 1;
+	this.picWidth = this.picHeight = 16;
 	
-	this.Life = 0;
+	this.life = 0;
 };
 
 Mario.FireFlower.prototype = new Mario.NotchSprite();
 
-Mario.FireFlower.prototype.CollideCheck = function() {
-	var xMarioD = Mario.MarioCharacter.X - this.X, yMarioD = Mario.MarioCharacter.Y - this.Y;
+Mario.FireFlower.prototype.collideCheck = function() {
+	var xMarioD = Mario.MarioCharacter.x - this.x, yMarioD = Mario.MarioCharacter.y - this.y;
 	if (xMarioD > -16 && xMarioD < 16) {
-		if (yMarioD > -this.Height && yMarioD < Mario.MarioCharacter.Height) {
-			Mario.MarioCharacter.GetFlower();
-			this.World.RemoveSprite(this);
+		if (yMarioD > -this.height && yMarioD < Mario.MarioCharacter.height) {
+			Mario.MarioCharacter.getFlower();
+			this.world.removeSprite(this);
 		}
 	}
 };
 
-Mario.FireFlower.prototype.Move = function() {
-	if (this.Life < 9) {
-		this.Layer = 0;
-		this.Y--;
-		this.Life++;
+Mario.FireFlower.prototype.move = function() {
+	if (this.life < 9) {
+		this.layer = 0;
+		this.y--;
+		this.life++;
 		return;
 	}
 };

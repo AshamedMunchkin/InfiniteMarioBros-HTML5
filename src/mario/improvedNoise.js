@@ -4,12 +4,12 @@
 */
 
 Mario.ImprovedNoise = function(seed) {
-    this.P = [];
-    this.Shuffle(seed);
+    this.p = [];
+    this.shuffle(seed);
 };
 
 Mario.ImprovedNoise.prototype = {
-    Shuffle: function(seed) {
+    shuffle: function(seed) {
         var permutation = [];
         var i = 0, j = 0, tmp = 0;
         
@@ -22,49 +22,49 @@ Mario.ImprovedNoise.prototype = {
             tmp = permutation[i];
             permutation[i] = permutation[j];
             permutation[j] = tmp;
-            this.P[i + 256] = this.P[i] = permutation[i];
+            this.p[i + 256] = this.p[i] = permutation[i];
         }
     },
     
-    PerlinNoise: function(x, y) {
+    perlinNoise: function(x, y) {
         var i = 0, n = 0, stepSize = 0;
         
         for (i = 0; i < 8; i++) {
             stepSize = 64 / (1 << i);
-            n += this.Noise(x / stepSize, y / stepSize, 128) / (1 << i);
+            n += this.noise(x / stepSize, y / stepSize, 128) / (1 << i);
         }
         
         return n;
     },
     
-    Noise: function(x, y, z) {
+    noise: function(x, y, z) {
         var nx = (x | 0) & 255, ny = (y | 0) & 255, nz = (z | 0) & 255;
         x -= (x | 0);
         y -= (y | 0);
         z -= (z | 0);
         
-        var u = this.Fade(x), v = this.Fade(y), w = this.Fade(z);
-        var A = this.P[nx] + ny, AA = this.P[A] + nz, AB = this.P[A + 1] + nz,
-        B = this.P[nx + 1] + ny, BA = this.P[B] + nz, BB = this.P[B + 1] + nz;
+        var u = this.fade(x), v = this.fade(y), w = this.fade(z);
+        var a = this.p[nx] + ny, aa = this.p[a] + nz, ab = this.p[a + 1] + nz,
+        b = this.p[nx + 1] + ny, ba = this.p[b] + nz, bb = this.p[b + 1] + nz;
         
-        return this.Lerp(w, this.Lerp(v, this.Lerp(u, this.Grad(this.P[AA], x, y, z),
-            this.Grad(this.P[BA], x - 1, y, z)),
-            this.Lerp(u, this.Grad(this.P[AB], x, y - 1, z),
-                this.Grad(this.P[BB], x - 1, y - 1, z))),
-            this.Lerp(v, this.Lerp(u, this.Grad(this.P[AA + 1], x, y, z - 1),
-                this.Grad(this.P[BA + 1], x - 1, y, z - 1)),
-                this.Lerp(u, this.Grad(this.P[AB + 1], x, y - 1, z - 1), this.Grad(this.P[BB + 1], x - 1, y - 1, z - 1))));
+        return this.lerp(w, this.lerp(v, this.lerp(u, this.grad(this.p[aa], x, y, z),
+            this.grad(this.p[ba], x - 1, y, z)),
+            this.lerp(u, this.grad(this.p[ab], x, y - 1, z),
+                this.grad(this.p[bb], x - 1, y - 1, z))),
+            this.lerp(v, this.lerp(u, this.grad(this.p[aa + 1], x, y, z - 1),
+                this.grad(this.p[ba + 1], x - 1, y, z - 1)),
+                this.lerp(u, this.grad(this.p[ab + 1], x, y - 1, z - 1), this.grad(this.p[bb + 1], x - 1, y - 1, z - 1))));
     },
     
-    Fade: function(t) {
+    fade: function(t) {
         return t * t * t * (t * (t * 6 - 15) + 10);
     },
     
-    Lerp: function(t, x, y) {
+    lerp: function(t, x, y) {
         return x + t * (y - x);
     },
     
-    Grad: function(hash, x, y, z) {
+    grad: function(hash, x, y, z) {
         var h = hash & 15;
         var u = h < 8 ? x : y;
         var v = h < 4 ? y : (h === 12 || h === 14) ? x : z;

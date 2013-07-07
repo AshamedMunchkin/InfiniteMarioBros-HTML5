@@ -5,88 +5,88 @@
 
 Mario.Character = function() {
     //these are static in Notch's code... here it doesn't seem necessary
-    this.Large = false;
-    this.Fire = false;
-    this.Coins = 0;
-    this.Lives = 3;
-    this.LevelString = "none";
-    this.GroundInertia = 0.89;
-    this.AirInertia = 0.89;
+    this.large = false;
+    this.fire = false;
+    this.coins = 0;
+    this.lives = 3;
+    this.levelString = "none";
+    this.groundInertia = 0.89;
+    this.airInertia = 0.89;
     
     //non static variables in Notch's code
-    this.RunTime = 0;
-    this.WasOnGround = false;
-    this.OnGround = false;
-    this.MayJump = false;
-    this.Ducking = false;
-    this.Sliding = false;
-    this.JumpTime = 0;
-    this.XJumpSpeed = 0;
-    this.YJumpSpeed = 0;
-    this.CanShoot = false;
+    this.runTime = 0;
+    this.wasOnGround = false;
+    this.onGround = false;
+    this.mayJump = false;
+    this.ducking = false;
+    this.sliding = false;
+    this.jumpTime = 0;
+    this.xJumpSpeed = 0;
+    this.yJumpSpeed = 0;
+    this.canShoot = false;
     
-    this.Width = 4;
-    this.Height = 24;
+    this.width = 4;
+    this.height = 24;
     
     //Level scene
-    this.World = null;
-    this.Facing = 0;
-    this.PowerUpTime = 0;
+    this.world = null;
+    this.facing = 0;
+    this.powerUpTime = 0;
     
-    this.XDeathPos = 0; this.YDeathPos = 0;
-    this.DeathTime = 0;
-    this.WinTime = 0;
-    this.InvulnerableTime = 0;
+    this.xDeathPos = 0; this.yDeathPos = 0;
+    this.deathTime = 0;
+    this.winTime = 0;
+    this.invulnerableTime = 0;
     
     //Sprite
-    this.Carried = null;
+    this.carried = null;
     
-    this.LastLarge = false;
-    this.LastFire = false;
-    this.NewLarge = false;
-    this.NewFire = false;
+    this.lastLarge = false;
+    this.lastFire = false;
+    this.newLarge = false;
+    this.newFire = false;
 };
 
 Mario.Character.prototype = new Mario.NotchSprite(null);
 
-Mario.Character.prototype.Initialize = function(world) {
-    this.World = world;
-    this.X = 32;
-    this.Y = 0;
-	this.PowerUpTime = 0;
+Mario.Character.prototype.initialize = function(world) {
+    this.world = world;
+    this.x = 32;
+    this.y = 0;
+	this.powerUpTime = 0;
     
     //non static variables in Notch's code
-    this.RunTime = 0;
-    this.WasOnGround = false;
-    this.OnGround = false;
-    this.MayJump = false;
-    this.Ducking = false;
-    this.Sliding = false;
-    this.JumpTime = 0;
-    this.XJumpSpeed = 0;
-    this.YJumpSpeed = 0;
-    this.CanShoot = false;
+    this.runTime = 0;
+    this.wasOnGround = false;
+    this.onGround = false;
+    this.mayJump = false;
+    this.ducking = false;
+    this.sliding = false;
+    this.jumpTime = 0;
+    this.xJumpSpeed = 0;
+    this.yJumpSpeed = 0;
+    this.canShoot = false;
     
-    this.Width = 4;
-    this.Height = 24;
+    this.width = 4;
+    this.height = 24;
     
     //Level scene
-    this.World = world;
-    this.Facing = 0;
-    this.PowerUpTime = 0;
+    this.world = world;
+    this.facing = 0;
+    this.powerUpTime = 0;
     
-    this.XDeathPos = 0; this.YDeathPos = 0;
-    this.DeathTime = 0;
-    this.WinTime = 0;
-    this.InvulnerableTime = 0;
+    this.xDeathPos = 0; this.yDeathPos = 0;
+    this.deathTime = 0;
+    this.winTime = 0;
+    this.invulnerableTime = 0;
     
     //Sprite
-    this.Carried = null;
+    this.carried = null;
     
-    this.SetLarge(this.Large, this.Fire);
+    this.setLarge(this.large, this.fire);
 };
 
-Mario.Character.prototype.SetLarge = function(large, fire) {
+Mario.Character.prototype.setLarge = function(large, fire) {
     if (fire) {
         large = true;
     }
@@ -94,258 +94,258 @@ Mario.Character.prototype.SetLarge = function(large, fire) {
         fire = false;
     }
     
-    this.LastLarge = this.Large;
-    this.LastFire = this.Fire;
-    this.Large = large;
-    this.Fire = fire;
-    this.NewLarge = this.Large;
-    this.NewFire = this.Fire;
+    this.lastLarge = this.large;
+    this.lastFire = this.fire;
+    this.large = large;
+    this.fire = fire;
+    this.newLarge = this.large;
+    this.newFire = this.fire;
     
-    this.Blink(true);
+    this.blink(true);
 };
 
-Mario.Character.prototype.Blink = function(on) {
-    this.Large = on ? this.NewLarge : this.LastLarge;
-    this.Fire = on ? this.NewFire : this.LastFire;
+Mario.Character.prototype.blink = function(on) {
+    this.large = on ? this.newLarge : this.lastLarge;
+    this.fire = on ? this.newFire : this.lastFire;
     
-    if (this.Large) {
-        if (this.Fire) {
-            this.Image = Enjine.Resources.images["fireMario"];
+    if (this.large) {
+        if (this.fire) {
+            this.image = Enjine.Resources.images["fireMario"];
         } else {
-            this.Image = Enjine.Resources.images["mario"];
+            this.image = Enjine.Resources.images["mario"];
         }
         
-        this.XPicO = 16;
-        this.YPicO = 31;
-        this.PicWidth = this.PicHeight = 32;
+        this.xPicO = 16;
+        this.yPicO = 31;
+        this.picWidth = this.picHeight = 32;
     } else {
-        this.Image = Enjine.Resources.images["smallMario"];
-        this.XPicO = 8;
-        this.YPicO = 15;
-        this.PicWidth = this.PicHeight = 16;
+        this.image = Enjine.Resources.images["smallMario"];
+        this.xPicO = 8;
+        this.yPicO = 15;
+        this.picWidth = this.picHeight = 16;
     }
 };
 
-Mario.Character.prototype.Move = function() {
-    if (this.WinTime > 0) {
-        this.WinTime++;
-        this.Xa = 0;
-        this.Ya = 0;
+Mario.Character.prototype.move = function() {
+    if (this.winTime > 0) {
+        this.winTime++;
+        this.xa = 0;
+        this.ya = 0;
         return;
     }
     
-    if (this.DeathTime > 0) {
-        this.DeathTime++;
-        if (this.DeathTime < 11) {
-            this.Xa = 0;
-            this.Ya = 0;
-        } else if (this.DeathTime === 11) {
-            this.Ya = -15;
+    if (this.deathTime > 0) {
+        this.deathTime++;
+        if (this.deathTime < 11) {
+            this.xa = 0;
+            this.ya = 0;
+        } else if (this.deathTime === 11) {
+            this.ya = -15;
         } else {
-            this.Ya += 2;
+            this.ya += 2;
         }
-        this.X += this.Xa;
-        this.Y += this.Ya;
+        this.x += this.xa;
+        this.y += this.ya;
         return;
     }
     
-    if (this.PowerUpTime !== 0) {
-        if (this.PowerUpTime > 0) {
-            this.PowerUpTime--;
-            this.Blink((((this.PowerUpTime / 3) | 0) & 1) === 0);
+    if (this.powerUpTime !== 0) {
+        if (this.powerUpTime > 0) {
+            this.powerUpTime--;
+            this.blink((((this.powerUpTime / 3) | 0) & 1) === 0);
         } else {
-            this.PowerUpTime++;
-            this.Blink((((-this.PowerUpTime / 3) | 0) & 1) === 0);
+            this.powerUpTime++;
+            this.blink((((-this.powerUpTime / 3) | 0) & 1) === 0);
         }
         
-        if (this.PowerUpTime === 0) {
-            this.World.Paused = false;
+        if (this.powerUpTime === 0) {
+            this.world.paused = false;
         }
         
-        this.CalcPic();
+        this.calcPic();
         return;
     }
     
-    if (this.InvulnerableTime > 0) {
-        this.InvulnerableTime--;
+    if (this.invulnerableTime > 0) {
+        this.invulnerableTime--;
     }
     
-    this.Visible = (((this.InvulerableTime / 2) | 0) & 1) === 0;
+    this.visible = (((this.invulnerableTime / 2) | 0) & 1) === 0;
     
-    this.WasOnGround = this.OnGround;
+    this.wasOnGround = this.onGround;
     var sideWaysSpeed = Enjine.Keyboard.isKeyDown(Enjine.Keys.a) ? 1.2 : 0.6;
     
-    if (this.OnGround) {
-        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.down) && this.Large) {
-            this.Ducking = true;
+    if (this.onGround) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.down) && this.large) {
+            this.ducking = true;
         } else {
-            this.Ducking = false;
+            this.ducking = false;
         }
     }
         
-    if (this.Xa > 2) {
-        this.Facing = 1;
+    if (this.xa > 2) {
+        this.facing = 1;
     }
-    if (this.Xa < -2) {
-        this.Facing = -1;
+    if (this.xa < -2) {
+        this.facing = -1;
     }
     
-    if (Enjine.Keyboard.IsKeyDown(Enjine.Keys.s) || (this.JumpTime < 0 && !this.OnGround && !this.Sliding)) {
-        if (this.JumpTime < 0) {
-            this.Xa = this.XJumpSpeed;
-            this.Ya = -this.JumpTime * this.YJumpSpeed;
-            this.JumpTime++;
-        } else if (this.OnGround && this.MayJump) {
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.s) || (this.jumpTime < 0 && !this.onGround && !this.sliding)) {
+        if (this.jumpTime < 0) {
+            this.xa = this.xJumpSpeed;
+            this.ya = -this.jumpTime * this.yJumpSpeed;
+            this.jumpTime++;
+        } else if (this.onGround && this.mayJump) {
             Enjine.Resources.playSound("jump");
-            this.XJumpSpeed = 0;
-            this.YJumpSpeed = -1.9;
-            this.JumpTime = 7;
-            this.Ya = this.JumpTime * this.YJumpSpeed;
-            this.OnGround = false;
-            this.Sliding = false;
-        } else if (this.Sliding && this.MayJump) {
+            this.xJumpSpeed = 0;
+            this.yJumpSpeed = -1.9;
+            this.jumpTime = 7;
+            this.ya = this.jumpTime * this.yJumpSpeed;
+            this.onGround = false;
+            this.sliding = false;
+        } else if (this.sliding && this.mayJump) {
             Enjine.Resources.playSound("jump");
-            this.XJumpSpeed = -this.Facing * 6;
-            this.YJumpSpeed = -2;
-            this.JumpTime = -6;
-            this.Xa = this.XJumpSpeed;
-            this.Ya = -this.JumpTime * this.YJumpSpeed;
-            this.OnGround = false;
-            this.Sliding = false;
-            this.Facing = -this.Facing;
-        } else if (this.JumpTime > 0) {
-            this.Xa += this.XJumpSpeed;
-            this.Ya = this.JumpTime * this.YJumpSpeed;
-            this.JumpTime--;
+            this.xJumpSpeed = -this.facing * 6;
+            this.yJumpSpeed = -2;
+            this.jumpTime = -6;
+            this.xa = this.xJumpSpeed;
+            this.ya = -this.jumpTime * this.yJumpSpeed;
+            this.onGround = false;
+            this.sliding = false;
+            this.facing = -this.facing;
+        } else if (this.jumpTime > 0) {
+            this.xa += this.xJumpSpeed;
+            this.ya = this.jumpTime * this.yJumpSpeed;
+            this.jumpTime--;
         }
     } else {
-        this.JumpTime = 0;
+        this.jumpTime = 0;
     }
     
-    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.left) && !this.Ducking) {
-        if (this.Facing === 1) {
-            this.Sliding = false;
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.left) && !this.ducking) {
+        if (this.facing === 1) {
+            this.sliding = false;
         }
-        this.Xa -= sideWaysSpeed;
-        if (this.JumpTime >= 0) {
-            this.Facing = -1;
-        }
-    }
-    
-    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.right) && !this.Ducking) {
-        if (this.Facing === -1) {
-            this.Sliding = false;
-        }
-        this.Xa += sideWaysSpeed;
-        if (this.JumpTime >= 0) {
-            this.Facing = 1;
+        this.xa -= sideWaysSpeed;
+        if (this.jumpTime >= 0) {
+            this.facing = -1;
         }
     }
     
-    if ((!Enjine.Keyboard.isKeyDown(Enjine.Keys.left) && !Enjine.Keyboard.isKeyDown(Enjine.Keys.right)) || this.Ducking || this.Ya < 0 || this.OnGround) {
-        this.Sliding = false;  
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.right) && !this.ducking) {
+        if (this.facing === -1) {
+            this.sliding = false;
+        }
+        this.xa += sideWaysSpeed;
+        if (this.jumpTime >= 0) {
+            this.facing = 1;
+        }
     }
     
-    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.a) && this.CanShoot && this.Fire && this.World.FireballsOnScreen < 2) {
-        Enjine.Resources.PlaySound("fireball");
-        this.World.AddSprite(new Mario.Fireball(this.World, this.X + this.Facing * 6, this.Y - 20, this.Facing));
+    if ((!Enjine.Keyboard.isKeyDown(Enjine.Keys.left) && !Enjine.Keyboard.isKeyDown(Enjine.Keys.right)) || this.ducking || this.ya < 0 || this.onGround) {
+        this.sliding = false;  
     }
     
-    this.CanShoot = !Enjine.Keyboard.isKeyDown(Enjine.Keys.a);
-    this.MayJump = (this.OnGround || this.Sliding) && !Enjine.Keyboard.isKeyDown(Enjine.Keys.s);
-    this.XFlip = (this.Facing === -1);
-    this.RunTime += Math.abs(this.Xa) + 5;
-    
-    if (Math.abs(this.Xa) < 0.5) {
-        this.RunTime = 0;
-        this.Xa = 0;
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.a) && this.canShoot && this.fire && this.world.fireballsOnScreen < 2) {
+        Enjine.Resources.playSound("fireball");
+        this.world.addSprite(new Mario.Fireball(this.world, this.x + this.facing * 6, this.y - 20, this.facing));
     }
     
-    this.CalcPic();
+    this.canShoot = !Enjine.Keyboard.isKeyDown(Enjine.Keys.a);
+    this.mayJump = (this.onGround || this.sliding) && !Enjine.Keyboard.isKeyDown(Enjine.Keys.s);
+    this.xFlip = (this.facing === -1);
+    this.runTime += Math.abs(this.xa) + 5;
     
-    if (this.Sliding) {
-        this.World.AddSprite(new Mario.Sparkle(this.World, ((this.X + Math.random() * 4 - 2) | 0) + this.Facing * 8,
-            ((this.Y + Math.random() * 4) | 0) - 24, Math.random() * 2 - 1, Math.random(), 0, 1, 5));
-        this.Ya *= 0.5;
+    if (Math.abs(this.xa) < 0.5) {
+        this.runTime = 0;
+        this.xa = 0;
     }
     
-    this.OnGround = false;
-    this.SubMove(this.Xa, 0);
-    this.SubMove(0, this.Ya);
-    if (this.Y > this.World.Level.Height * 16 + 16) {
-        this.Die();
+    this.calcPic();
+    
+    if (this.sliding) {
+        this.world.addSprite(new Mario.Sparkle(this.world, ((this.x + Math.random() * 4 - 2) | 0) + this.facing * 8,
+            ((this.y + Math.random() * 4) | 0) - 24, Math.random() * 2 - 1, Math.random(), 0, 1, 5));
+        this.ya *= 0.5;
     }
     
-    if (this.X < 0) {
-        this.X = 0;
-        this.Xa = 0;
+    this.onGround = false;
+    this.subMove(this.xa, 0);
+    this.subMove(0, this.ya);
+    if (this.y > this.world.level.height * 16 + 16) {
+        this.die();
     }
     
-    if (this.X > this.World.Level.ExitX * 16) {
-        this.Win();
+    if (this.x < 0) {
+        this.x = 0;
+        this.xa = 0;
     }
     
-    if (this.X > this.World.Level.Width * 16) {
-        this.X = this.World.Level.Width * 16;
-        this.Xa = 0;
+    if (this.x > this.world.level.exitX * 16) {
+        this.win();
     }
     
-    this.Ya *= 0.85;
-    if (this.OnGround) {
-        this.Xa *= this.GroundInertia;
+    if (this.x > this.world.level.width * 16) {
+        this.x = this.world.level.width * 16;
+        this.xa = 0;
+    }
+    
+    this.ya *= 0.85;
+    if (this.onGround) {
+        this.xa *= this.groundInertia;
     } else {
-        this.Xa *= this.AirInertia;
+        this.xa *= this.airInertia;
     }
     
-    if (!this.OnGround) {
-        this.Ya += 3;
+    if (!this.onGround) {
+        this.ya += 3;
     }
     
-    if (this.Carried !== null) {
-        this.Carried.X *= this.X + this.Facing * 8;
-        this.Carried.Y *= this.Y - 2;
+    if (this.carried !== null) {
+        this.carried.x *= this.x + this.facing * 8;
+        this.carried.y *= this.y - 2;
         if (!Enjine.Keyboard.isKeyDown(Enjine.Keys.a)) {
-            this.Carried.Release(this);
-            this.Carried = null;
+            this.carried.release(this);
+            this.carried = null;
         }
     }
 };
 
-Mario.Character.prototype.CalcPic = function() {
+Mario.Character.prototype.calcPic = function() {
     var runFrame = 0, i = 0;
     
-    if (this.Large) {
-        runFrame = ((this.RunTime / 20) | 0) % 4;
+    if (this.large) {
+        runFrame = ((this.runTime / 20) | 0) % 4;
         if (runFrame === 3) {
             runFrame = 1;
         }
-        if (this.Carried === null && Math.abs(this.Xa) > 10) {
+        if (this.carried === null && Math.abs(this.xa) > 10) {
             runFrame += 3;
         }
-        if (this.Carried !== null) {
+        if (this.carried !== null) {
             runFrame += 10;
         }
-        if (!this.OnGround) {
-            if (this.Carried !== null) {
+        if (!this.onGround) {
+            if (this.carried !== null) {
                 runFrame = 12;
-            } else if (Math.abs(this.Xa) > 10) {
+            } else if (Math.abs(this.xa) > 10) {
                 runFrame = 7;
             } else {
                 runFrame = 6;
             }
         }
     } else {
-        runFrame = ((this.RunTime / 20) | 0) % 2;
-        if (this.Carried === null && Math.abs(this.Xa) > 10) {
+        runFrame = ((this.runTime / 20) | 0) % 2;
+        if (this.carried === null && Math.abs(this.xa) > 10) {
             runFrame += 2;
         }
-        if (this.Carried !== null) {
+        if (this.carried !== null) {
             runFrame += 8;
         }
-        if (!this.OnGround) {
-            if (this.Carried !== null) {
+        if (!this.onGround) {
+            if (this.carried !== null) {
                 runFrame = 9;
-            } else if (Math.abs(this.Xa) > 10) {
+            } else if (Math.abs(this.xa) > 10) {
                 runFrame = 5;
             } else {
                 runFrame = 4;
@@ -353,311 +353,311 @@ Mario.Character.prototype.CalcPic = function() {
         }
     }
     
-    if (this.OnGround && ((this.Facing === -1 && this.Xa > 0) || (this.Facing === 1 && this.Xa < 0))) {
-        if (this.Xa > 1 || this.Xa < -1) {
-            runFrame = this.Large ? 9 : 7;
+    if (this.onGround && ((this.facing === -1 && this.xa > 0) || (this.facing === 1 && this.xa < 0))) {
+        if (this.xa > 1 || this.xa < -1) {
+            runFrame = this.large ? 9 : 7;
         }
         
-        if (this.Xa > 3 || this.Xa < -3) {
+        if (this.xa > 3 || this.xa < -3) {
             for (i = 0; i < 3; i++) {
-                this.World.AddSprite(new Mario.Sparkle(this.World, (this.X + Math.random() * 8 - 4) | 0, (this.Y + Math.random() * 4) | 0, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
+                this.world.addSprite(new Mario.Sparkle(this.world, (this.x + Math.random() * 8 - 4) | 0, (this.y + Math.random() * 4) | 0, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
             }
         }
     }
     
-    if (this.Large) {
-        if (this.Ducking) {
+    if (this.large) {
+        if (this.ducking) {
             runFrame = 14;
         }
-        this.Height = this.Ducking ? 12 : 24;
+        this.height = this.ducking ? 12 : 24;
     } else {
-        this.Height = 12;
+        this.height = 12;
     }
     
-    this.XPic = runFrame;
+    this.xPic = runFrame;
 };
 
-Mario.Character.prototype.SubMove = function(xa, ya) {
+Mario.Character.prototype.subMove = function(xa, ya) {
     var collide = false;
     
     while (xa > 8) {
-        if (!this.SubMove(8, 0)) {
+        if (!this.subMove(8, 0)) {
             return false;
         }
         xa -= 8;
     }
     while (xa < -8) {
-        if (!this.SubMove(-8, 0)) {
+        if (!this.subMove(-8, 0)) {
             return false;
         }
         xa += 8;
     }
     while (ya > 8) {
-        if (!this.SubMove(0, 8)) {
+        if (!this.subMove(0, 8)) {
             return false;
         }
         ya -= 8;
     }
     while (ya < -8) {
-        if (!this.SubMove(0, -8)) {
+        if (!this.subMove(0, -8)) {
             return false;
         }
         ya += 8;
     }
     
     if (ya > 0) {
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, 0)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, 0)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa - this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
         }
     }
     if (ya < 0) {
-        if (this.IsBlocking(this.X + xa, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
     }
     
     if (xa > 0) {
-        this.Sliding = true;
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        this.sliding = true;
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
         
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
         
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
     }
     if (xa < 0) {
-        this.Sliding = true;
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        this.sliding = true;
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
         
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
         
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, ya)) {
             collide = true;
         } else {
-            this.Sliding = false;
+            this.sliding = false;
         }
     }
     
     if (collide) {
         if (xa < 0) {
-            this.X = (((this.X - this.Width) / 16) | 0) * 16 + this.Width;
-            this.Xa = 0;
+            this.x = (((this.x - this.width) / 16) | 0) * 16 + this.width;
+            this.xa = 0;
         }
         if (xa > 0) {
-            this.X = (((this.X + this.Width) / 16 + 1) | 0) * 16 - this.Width - 1;
-            this.Xa = 0;
+            this.x = (((this.x + this.width) / 16 + 1) | 0) * 16 - this.width - 1;
+            this.xa = 0;
         }
         if (ya < 0) {
-            this.Y = (((this.Y - this.Height) / 16) | 0) * 16 + this.Height;
-            this.JumpTime = 0;
-            this.Ya = 0;
+            this.y = (((this.y - this.height) / 16) | 0) * 16 + this.height;
+            this.jumpTime = 0;
+            this.ya = 0;
         }
         if (ya > 0) {
-            this.Y = (((this.Y - 1) / 16 + 1) | 0) * 16 - 1;
-            this.OnGround = true;
+            this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
+            this.onGround = true;
         }
         
         return false;
     } else {
-        this.X += xa;
-        this.Y += ya;
+        this.x += xa;
+        this.y += ya;
         return true;
     }
 };
 
-Mario.Character.prototype.IsBlocking = function(x, y, xa, ya) {
+Mario.Character.prototype.isBlocking = function(x, y, xa, ya) {
     var blocking = false, block = 0, xx = 0, yy = 0;
     
     x = (x / 16) | 0;
     y = (y / 16) | 0;
-    if (x === ((this.X / 16) | 0) && y === ((this.Y / 16) | 0)) {
+    if (x === ((this.x / 16) | 0) && y === ((this.y / 16) | 0)) {
         return false;
     }
     
-    block = this.World.Level.GetBlock(x, y);
+    block = this.world.level.getBlock(x, y);
     
-    if (((Mario.Tile.Behaviors[block & 0xff]) & Mario.Tile.PickUpable) > 0) {
-        this.GetCoin();
+    if (((Mario.Tile.behaviors[block & 0xff]) & Mario.Tile.pickUpable) > 0) {
+        this.getCoin();
         Enjine.Resources.playSound("coin");
-        this.World.Level.SetBlock(x, y, 0);
+        this.world.level.setBlock(x, y, 0);
         for (xx = 0; xx < 2; xx++) {
             for (yy = 0; yy < 2; yy++) {
-                this.World.AddSprite(new Mario.Sparkle(this.World, x * 16 + xx * 8 + ((Math.random() * 8) | 0), y * 16 + yy * 8 + ((Math.random() * 8) | 0), 0, 0, 0, 2, 5));
+                this.world.addSprite(new Mario.Sparkle(this.world, x * 16 + xx * 8 + ((Math.random() * 8) | 0), y * 16 + yy * 8 + ((Math.random() * 8) | 0), 0, 0, 0, 2, 5));
             }
         }
     }
     
-    blocking = this.World.Level.IsBlocking(x, y, xa, ya);
+    blocking = this.world.level.isBlocking(x, y, xa, ya);
     if (blocking && ya < 0) {
-        this.World.Bump(x, y, this.Large);
+        this.world.bump(x, y, this.large);
     }
     return blocking;
 };
 
-Mario.Character.prototype.Stomp = function(object) {
+Mario.Character.prototype.stomp = function(object) {
     var targetY = 0;
 
-    if (this.DeathTime > 0 || this.World.Paused) {
+    if (this.deathTime > 0 || this.world.paused) {
         return;
     }
     
-    targetY = object.Y - object.Height / 2;
-    this.SubMove(0, targetY - this.Y);
+    targetY = object.y - object.height / 2;
+    this.subMove(0, targetY - this.y);
     
     if (object instanceof Mario.Enemy || object instanceof Mario.BulletBill) {
         
         Enjine.Resources.playSound("kick");
-        this.XJumpSpeed = 0;
-        this.YJumpSpeed = -1.9;
-        this.JumpTime = 8;
-        this.Ya = this.JumpTime * this.YJumpSpeed;
-        this.OnGround = false;
-        this.Sliding = false;
-        this.InvulnerableTime = 1;
+        this.xJumpSpeed = 0;
+        this.yJumpSpeed = -1.9;
+        this.jumpTime = 8;
+        this.ya = this.jumpTime * this.yJumpSpeed;
+        this.onGround = false;
+        this.sliding = false;
+        this.invulnerableTime = 1;
     } else if (object instanceof Mario.Shell) {
-        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.a) && object.Facing === 0) {
-            this.Carried = object;
-            object.Carried = true;
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.a) && object.facing === 0) {
+            this.carried = object;
+            object.carried = true;
         } else {
             Enjine.Resources.playSound("kick");
-            this.XJumpSpeed = 0;
-            this.YJumpSpeed = -1.9;
-            this.JumpTime = 8;
-            this.Ya = this.JumpTime * this.YJumpSpeed;
-            this.OnGround = false;
-            this.Sliding = false;
-            this.InvulnerableTime = 1;
+            this.xJumpSpeed = 0;
+            this.yJumpSpeed = -1.9;
+            this.jumpTime = 8;
+            this.ya = this.jumpTime * this.yJumpSpeed;
+            this.onGround = false;
+            this.sliding = false;
+            this.invulnerableTime = 1;
         }
     }
 };
 
-Mario.Character.prototype.GetHurt = function() {
-    if (this.DeathTime > 0 || this.World.Paused) {
+Mario.Character.prototype.getHurt = function() {
+    if (this.deathTime > 0 || this.world.paused) {
         return;
     }
-    if (this.InvulnerableTime > 0) {
+    if (this.invulnerableTime > 0) {
         return;
     }
     
-    if (this.Large) {
-        this.World.Paused = true;
-        this.PowerUpTime = -18;
+    if (this.large) {
+        this.world.paused = true;
+        this.powerUpTime = -18;
         Enjine.Resources.playSound("powerdown");
-        if (this.Fire) {
-            this.SetLarge(true, false);
+        if (this.fire) {
+            this.setLarge(true, false);
         } else {
-            this.SetLarge(false, false);
+            this.setLarge(false, false);
         }
-        this.InvulnerableTime = 32;
+        this.invulnerableTime = 32;
     } else {
-        this.Die();
+        this.die();
     }
 };
 
-Mario.Character.prototype.Win = function() {
-    this.XDeathPos = this.X | 0;
-    this.YDeathPos = this.Y | 0;
-    this.World.Paused = true;
-    this.WinTime = 1;
+Mario.Character.prototype.win = function() {
+    this.xDeathPos = this.x | 0;
+    this.yDeathPos = this.y | 0;
+    this.world.paused = true;
+    this.winTime = 1;
     Enjine.Resources.playSound("exit");
 };
 
-Mario.Character.prototype.Die = function() {
-    this.XDeathPos = this.X | 0;
-    this.YDeathPos = this.Y | 0;
-    this.World.Paused = true;
-    this.DeathTime = 1;
+Mario.Character.prototype.die = function() {
+    this.xDeathPos = this.x | 0;
+    this.yDeathPos = this.y | 0;
+    this.world.paused = true;
+    this.deathTime = 1;
     Enjine.Resources.playSound("death");
-    this.SetLarge(false, false);
+    this.setLarge(false, false);
 };
 
-Mario.Character.prototype.GetFlower = function() {
-    if (this.DeathTime > 0 && this.World.Paused) {
+Mario.Character.prototype.getFlower = function() {
+    if (this.deathTime > 0 && this.world.paused) {
         return;
     }
     
-    if (!this.Fire) {
-        this.World.Paused = true;
-        this.PowerUpTime = 18;
+    if (!this.fire) {
+        this.world.paused = true;
+        this.powerUpTime = 18;
         Enjine.Resources.playSound("powerup");
-        this.SetLarge(true, true);
+        this.setLarge(true, true);
     } else {
-        this.GetCoin();
+        this.getCoin();
         Enjine.Resources.playSound("coin");
     }
 };
 
-Mario.Character.prototype.GetMushroom = function() {
-    if (this.DeathTime > 0 && this.World.Paused) {
+Mario.Character.prototype.getMushroom = function() {
+    if (this.deathTime > 0 && this.world.paused) {
         return;
     }
     
-    if (!this.Large) {
-        this.World.Paused = true;
-        this.PowerUpTime = 18;
+    if (!this.large) {
+        this.world.paused = true;
+        this.powerUpTime = 18;
         Enjine.Resources.playSound("powerup");
-        this.SetLarge(true, false);
+        this.setLarge(true, false);
     } else {
-        this.GetCoin();
+        this.getCoin();
         Enjine.Resources.playSound("coin");
     }
 };
 
-Mario.Character.prototype.Kick = function(shell) {
-    if (this.DeathTime > 0 && this.World.Paused) {
+Mario.Character.prototype.kick = function(shell) {
+    if (this.deathTime > 0 && this.world.paused) {
         return;
     }
     
     if (Enjine.Keyboard.isKeyDown(Enjine.Keys.a)) {
-        this.Carried = shell;
-        shell.Carried = true;
+        this.carried = shell;
+        shell.carried = true;
     } else {
         Enjine.Resources.playSound("kick");
-        this.InvulnerableTime = 1;
+        this.invulnerableTime = 1;
     }
 };
 
-Mario.Character.prototype.Get1Up = function() {
+Mario.Character.prototype.get1Up = function() {
     Enjine.Resources.playSound("1up");
-    this.Lives++;
-    if (this.Lives === 99) {
-        this.Lives = 99;
+    this.lives++;
+    if (this.lives === 99) {
+        this.lives = 99;
     }
 };
 
-Mario.Character.prototype.GetCoin = function() {
-    this.Coins++;
-    if (this.Coins === 100) {
-        this.Coins = 0;
-        this.Get1Up();
+Mario.Character.prototype.getCoin = function() {
+    this.coins++;
+    if (this.coins === 100) {
+        this.coins = 0;
+        this.get1Up();
     }
 };

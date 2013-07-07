@@ -4,73 +4,73 @@
 */
 
 Mario.FlowerEnemy = function(world, x, y) {
-    this.Image = Enjine.Resources.Images["enemies"];
-    this.World = world;
-    this.X = x;
-    this.Y = y;
-    this.Facing = 1;
-    this.Type = Mario.Enemy.Spiky;
-    this.Winged = false;
-    this.NoFireballDeath = false;
-    this.XPic = 0;
-    this.YPic = 6;
-    this.YPicO = 24;
-    this.Height = 12;
-    this.Width = 2;
-    this.YStart = y;
-    this.Ya = -8;
-    this.Y -= 1;
-    this.Layer = 0;
-    this.JumpTime = 0;
-    this.Tick = 0;
+    this.image = Enjine.Resources.images["enemies"];
+    this.world = world;
+    this.x = x;
+    this.y = y;
+    this.facing = 1;
+    this.type = Mario.Enemy.spiky;
+    this.winged = false;
+    this.noFireballDeath = false;
+    this.xPic = 0;
+    this.yPic = 6;
+    this.yPicO = 24;
+    this.height = 12;
+    this.width = 2;
+    this.yStart = y;
+    this.ya = -8;
+    this.y -= 1;
+    this.layer = 0;
+    this.jumpTime = 0;
+    this.tick = 0;
     
     var i = 0;
     for (i = 0; i < 4; i++) {
-        this.Move();
+        this.move();
     }
 };
 
 Mario.FlowerEnemy.prototype = new Mario.Enemy();
 
-Mario.FlowerEnemy.prototype.Move = function() {
+Mario.FlowerEnemy.prototype.move = function() {
     var i = 0, xd = 0;
-    if (this.DeadTime > 0) {
-        this.DeadTime--;
+    if (this.deadTime > 0) {
+        this.deadTime--;
         
-        if (this.DeadTime === 0) {
-            this.DeadTime = 1;
+        if (this.deadTime === 0) {
+            this.deadTime = 1;
             for (i = 0; i < 8; i++) {
-                this.World.AddSprite(new Mario.Sparkle(((this.X + Math.random() * 16 - 8) | 0)  + 4, ((this.Y + Math.random() * 8) | 0) + 4, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
+                this.world.addSprite(new Mario.Sparkle(((this.x + Math.random() * 16 - 8) | 0)  + 4, ((this.y + Math.random() * 8) | 0) + 4, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
             }
-            this.World.RemoveSprite(this);
+            this.world.removeSprite(this);
         }
         
-        this.X += this.Xa;
-        this.Y += this.Ya;
-        this.Ya *= 0.95;
-        this.Ya += 1;
+        this.x += this.xa;
+        this.y += this.ya;
+        this.ya *= 0.95;
+        this.ya += 1;
         
         return;
     }
     
-    this.Tick++;
+    this.tick++;
     
-    if (this.Y >= this.YStart) {
-        this.YStart = this.Y;
-        xd = Math.abs(Mario.MarioCharacter.X - this.X) | 0;
-        this.JumpTime++;
-        if (this.JumpTime > 40 && xd > 24) {
-            this.Ya = -8;
+    if (this.y >= this.yStart) {
+        this.yStart = this.y;
+        xd = Math.abs(Mario.MarioCharacter.x - this.x) | 0;
+        this.jumpTime++;
+        if (this.jumpTime > 40 && xd > 24) {
+            this.ya = -8;
         } else {
-            this.Ya = 0;
+            this.ya = 0;
         }
     } else {
-        this.JumpTime = 0;
+        this.jumpTime = 0;
     }
     
-    this.Y += this.Ya;
-    this.Ya *= 0.9;
-    this.Ya += 0.1;
+    this.y += this.ya;
+    this.ya *= 0.9;
+    this.ya += 0.1;
     
-    this.XPic = (((this.Tick / 2) | 0) & 1) * 2 + (((this.Tick / 6) | 0) & 1);
+    this.xPic = (((this.tick / 2) | 0) & 1) * 2 + (((this.tick / 6) | 0) & 1);
 };

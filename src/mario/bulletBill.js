@@ -4,107 +4,107 @@
 */
 
 Mario.BulletBill = function(world, x, y, dir) {
-	this.Image = Enjine.Resources.Images["enemies"];
-	this.World = world;
-	this.X = x;
-	this.Y = y;
-	this.Facing = dir;
+	this.image = Enjine.Resources.images["enemies"];
+	this.world = world;
+	this.x = x;
+	this.y = y;
+	this.facing = dir;
 	
-	this.XPicO = 8;
-	this.YPicO = 31;
-	this.Height = 12;
-	this.Width = 4;
-	this.PicWidth = 16;
-	this.YPic = 5;
-	this.XPic = 0;
-	this.Ya = -5;
-	this.DeadTime = 0;
-	this.Dead = false;
-	this.Anim = 0;
+	this.xPicO = 8;
+	this.yPicO = 31;
+	this.height = 12;
+	this.width = 4;
+	this.picWidth = 16;
+	this.yPic = 5;
+	this.xPic = 0;
+	this.ya = -5;
+	this.deadTime = 0;
+	this.dead = false;
+	this.anim = 0;
 };
 
 Mario.BulletBill.prototype = new Mario.NotchSprite();
 
-Mario.BulletBill.prototype.CollideCheck = function() {
-    if (this.Dead) {
+Mario.BulletBill.prototype.collideCheck = function() {
+    if (this.dead) {
         return;
     }
     
-    var xMarioD = Mario.MarioCharacter.X - this.X, yMarioD = Mario.MarioCharacter.Y - this.Y;
+    var xMarioD = Mario.MarioCharacter.x - this.x, yMarioD = Mario.MarioCharacter.y - this.y;
     if (xMarioD > -16 && xMarioD < 16) {
-        if (yMarioD > -this.Height && yMarioD < this.World.Mario.Height) {
-            if (Mario.MarioCharacter.Y > 0 && yMarioD <= 0 && (!Mario.MarioCharacter.OnGround || !Mario.MarioCharacter.WasOnGround)) {
-                Mario.MarioCharacter.Stomp(this);
-                this.Dead = true;
+        if (yMarioD > -this.height && yMarioD < this.world.mario.height) {
+            if (Mario.MarioCharacter.y > 0 && yMarioD <= 0 && (!Mario.MarioCharacter.onGround || !Mario.MarioCharacter.wasOnGround)) {
+                Mario.MarioCharacter.stomp(this);
+                this.dead = true;
                 
-                this.Xa = 0;
-                this.Ya = 1;
-                this.DeadTime = 100;
+                this.xa = 0;
+                this.ya = 1;
+                this.deadTime = 100;
             } else {
-                Mario.MarioCharacter.GetHurt();
+                Mario.MarioCharacter.getHurt();
             }
         }
     }
 };
 
-Mario.BulletBill.prototype.Move = function() {
+Mario.BulletBill.prototype.move = function() {
     var i = 0, sideWaysSpeed = 4;
-    if (this.DeadTime > 0) {
-        this.DeadTime--;
+    if (this.deadTime > 0) {
+        this.deadTime--;
         
-        if (this.DeadTime === 0) {
-            this.DeadTime = 1;
+        if (this.deadTime === 0) {
+            this.deadTime = 1;
             for (i = 0; i < 8; i++) {
-                this.World.AddSprite(new Mario.Sparkle(((this.X + Math.random() * 16 - 8) | 0) + 4, ((this.Y + Math.random() * 8) | 0) + 4, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
+                this.world.addSprite(new Mario.Sparkle(((this.x + Math.random() * 16 - 8) | 0) + 4, ((this.y + Math.random() * 8) | 0) + 4, Math.random() * 2 - 1, Math.random() * -1, 0, 1, 5));
             }
-            this.World.RemoveSprite(this);
+            this.world.removeSprite(this);
         }
         
-        this.X += this.Xa;
-        this.Y += this.Ya;
-        this.Ya *= 0.95;
-        this.Ya += 1;
+        this.x += this.xa;
+        this.y += this.ya;
+        this.ya *= 0.95;
+        this.ya += 1;
         
         return;
     }
     
-    this.Xa = this.Facing * sideWaysSpeed;
-    this.XFlip = this.Facing === -1;
-    this.Move(this.Xa, 0);
+    this.xa = this.facing * sideWaysSpeed;
+    this.xFlip = this.facing === -1;
+    this.move(this.xa, 0);
 };
 
-Mario.BulletBill.prototype.SubMove = function(xa, ya) {
-	this.X += xa;
+Mario.BulletBill.prototype.subMove = function(xa, ya) {
+	this.x += xa;
 	return true;
 };
 
-Mario.BulletBill.prototype.FireballCollideCheck = function(fireball) {
-    if (this.DeadTime !== 0) {
+Mario.BulletBill.prototype.fireballCollideCheck = function(fireball) {
+    if (this.deadTime !== 0) {
         return false;
     }
     
-    var xD = fireball.X - this.X, yD = fireball.Y - this.Y;
+    var xD = fireball.x - this.x, yD = fireball.y - this.y;
     if (xD > -16 && xD < 16) {
-        if (yD > -this.Height && yD < fireball.Height) {
+        if (yD > -this.height && yD < fireball.height) {
             return true;
         }
     }
     return false;
 };
 
-Mario.BulletBill.prototype.ShellCollideCheck = function(shell) {
-    if (this.DeadTime !== 0) {
+Mario.BulletBill.prototype.shellCollideCheck = function(shell) {
+    if (this.deadTime !== 0) {
         return false;
     }
     
-    var xD = shell.X - this.X, yD = shell.Y - this.Y;
+    var xD = shell.x - this.x, yD = shell.y - this.y;
     if (xD > -16 && xD < 16) {
-        if (yD > -this.Height && yD < shell.Height) {
-            Enjine.Resources.PlaySound("kick");
-            this.Dead = true;
-            this.Xa = 0;
-            this.Ya = 1;
-            this.DeadTime = 100;
+        if (yD > -this.height && yD < shell.height) {
+            Enjine.Resources.playSound("kick");
+            this.dead = true;
+            this.xa = 0;
+            this.ya = 1;
+            this.deadTime = 100;
             return true;
         }
     }

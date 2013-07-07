@@ -4,37 +4,37 @@
 */
 
 Mario.Sparkle = function(world, x, y, xa, ya) {
-    this.World = world;
-    this.X = x;
-    this.Y = y;
-    this.Xa = xa;
-    this.Ya = ya;
-    this.XPic = (Math.random() * 2) | 0;
-    this.YPic = 0;
+    this.world = world;
+    this.x = x;
+    this.y = y;
+    this.xa = xa;
+    this.ya = ya;
+    this.xPic = (Math.random() * 2) | 0;
+    this.yPic = 0;
     
-    this.Life = 10 + ((Math.random() * 5) | 0);
-    this.XPicStart = this.XPic;
-    this.XPicO = 4;
-    this.YPicO = 4;
+    this.life = 10 + ((Math.random() * 5) | 0);
+    this.xPicStart = this.xPic;
+    this.xPicO = 4;
+    this.yPicO = 4;
     
-    this.PicWidth = 8;
-    this.PicHeight = 8;
-    this.Image = Enjine.Resources.Images["particles"];
+    this.picWidth = 8;
+    this.picHeight = 8;
+    this.image = Enjine.Resources.images["particles"];
 };
 
 Mario.Sparkle.prototype = new Mario.NotchSprite();
 
-Mario.Sparkle.prototype.Move = function() {
-    if (this.Life > 10) {
-        this.XPic = 7;
+Mario.Sparkle.prototype.move = function() {
+    if (this.life > 10) {
+        this.xPic = 7;
     } else {
-        this.XPic = (this.XPicStart + (10 - this.Life) * 0.4) | 0;
+        this.xPic = (this.xPicStart + (10 - this.life) * 0.4) | 0;
     }
     
-    if (this.Life-- < 0) {
-        this.World.RemoveSprite(this);
+    if (this.life-- < 0) {
+        this.world.removeSprite(this);
     }
     
-    this.X += this.Xa;
-    this.Y += this.Ya;
+    this.x += this.xa;
+    this.y += this.ya;
 };

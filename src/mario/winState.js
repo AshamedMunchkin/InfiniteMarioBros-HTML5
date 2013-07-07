@@ -18,51 +18,53 @@ Mario.WinState.prototype.enter = function() {
     this.drawManager = new Enjine.DrawableManager();
     this.camera = new Enjine.Camera();
     
-    this.font = Mario.SpriteCuts.CreateBlackFont();
-    this.font.Strings[0] = { String: "Thank you for saving me, Mario!", X: 36, Y: 160 };
+    this.font = Mario.SpriteCuts.createBlackFont();
+    this.font.strings[0] = { string: "Thank you for saving me, Mario!", x: 36, y: 160 };
     
     this.kissing = new Enjine.AnimatedSprite();
-    this.kissing.Image = Enjine.Resources.Images["endScene"];
-    this.kissing.X = 112;
-    this.kissing.Y = 52;
-    this.kissing.SetColumnCount(2);
-    this.kissing.SetRowCount(1);
-    this.kissing.AddNewSequence("loop", 0, 0, 0, 1);
-    this.kissing.PlaySequence("loop", true);
-    this.kissing.FramesPerSecond = 1/2;
+    this.kissing.image = Enjine.Resources.images["endScene"];
+    this.kissing.x = 112;
+    this.kissing.y = 52;
+    this.kissing.setColumnCount(2);
+    this.kissing.setRowCount(1);
+    this.kissing.addNewSequence("loop", 0, 0, 0, 1);
+    this.kissing.playSequence("loop", true);
+    this.kissing.framesPerSecond = 1/2;
+    this.kissing.xPivot = 0;
+    this.kissing.yPivot = 0;
     
     this.waitTime = 2;
     
-    this.drawManager.Add(this.font);
-    this.drawManager.Add(this.kissing);
+    this.drawManager.add(this.font);
+    this.drawManager.add(this.kissing);
 };
 
 Mario.WinState.prototype.exit = function() {
-    this.drawManager.Clear();
+    this.drawManager.clear();
     delete this.drawManager;
     delete this.camera;
 };
 
 Mario.WinState.prototype.update = function(delta) {
-    this.drawManager.Update(delta);
+    this.drawManager.update(delta);
     
     if (this.waitTime > 0) {
         this.waitTime -= delta;
     } else {
-        if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
+        if (Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
             this.wasKeyDown = true;
         }
     }
 };
 
 Mario.WinState.prototype.draw = function(context) {
-    this.drawManager.Draw(context, this.camera);
+    this.drawManager.draw(context, this.camera);
 };
 
 Mario.WinState.prototype.checkForChange = function(context) {
     if (this.waitTime <= 0) {
-        if (this.wasKeyDown && !Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
-            context.ChangeState(new Mario.TitleState());
+        if (this.wasKeyDown && !Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
+            context.changeState(new Mario.TitleState());
         }
     }
 };

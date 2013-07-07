@@ -4,33 +4,33 @@
 */
 
 Mario.Particle = function(world, x, y, xa, ya, xPic, yPic) {
-	this.World = world;
-	this.X = x;
-	this.Y = y;
-	this.Xa = xa;
-	this.Ya = ya;
-	this.XPic = (Math.random() * 2) | 0;
-	this.YPic = 0;
-	this.XPicO = 4;
-	this.YPicO = 4;
+	this.world = world;
+	this.x = x;
+	this.y = y;
+	this.xa = xa;
+	this.ya = ya;
+	this.xPic = (Math.random() * 2) | 0;
+	this.yPic = 0;
+	this.xPicO = 4;
+	this.yPicO = 4;
 	
-	this.PicWidth = 8;
-	this.PicHeight = 8;
-	this.Life = 10;
+	this.picWidth = 8;
+	this.picHeight = 8;
+	this.life = 10;
 	
-	this.Image = Enjine.Resources.Images["particles"];
+	this.image = Enjine.Resources.images["particles"];
 };
 
 Mario.Particle.prototype = new Mario.NotchSprite();
 
-Mario.Particle.prototype.Move = function() {
-	if (this.Life - this.Delta < 0) {
-		this.World.RemoveSprite(this);
+Mario.Particle.prototype.move = function() {
+	if (this.life - this.delta < 0) {
+		this.world.removeSprite(this);
 	}
-	this.Life -= this.Delta;
+	this.life -= this.delta;
 	
-	this.X += this.Xa;
-	this.Y += this.Ya;
-	this.Ya *= 0.95;
-	this.Ya += 3;
+	this.x += this.xa;
+	this.y += this.ya;
+	this.ya *= 0.95;
+	this.ya += 3;
 };

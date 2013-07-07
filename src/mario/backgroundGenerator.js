@@ -4,87 +4,87 @@
 */
 
 Mario.BackgroundGenerator = function(width, height, distant, type) {
-    this.Width = width;
-    this.Height = height;
-    this.Distant = distant;
-    this.Type = type;
+    this.width = width;
+    this.height = height;
+    this.distant = distant;
+    this.type = type;
 };
 
 Mario.BackgroundGenerator.prototype = {
-    SetValues: function(width, height, distant, type) {
-        this.Width = width;
-        this.Height = height;
-        this.Distant = distant;
-        this.Type = type;
+    setValues: function(width, height, distant, type) {
+        this.width = width;
+        this.height = height;
+        this.distant = distant;
+        this.type = type;
     },
 
-    CreateLevel: function() {
-        var level = new Mario.Level(this.Width, this.Height);
-        switch (this.Type) {
-            case Mario.LevelType.Overground:
-                this.GenerateOverground(level);
+    createLevel: function() {
+        var level = new Mario.Level(this.width, this.height);
+        switch (this.type) {
+            case Mario.LevelType.overground:
+                this.generateOverground(level);
                 break;
-            case Mario.LevelType.Underground:
-                this.GenerateUnderground(level);
+            case Mario.LevelType.underground:
+                this.generateUnderground(level);
                 break;
-            case Mario.LevelType.Castle:
-                this.GenerateCastle(level);
+            case Mario.LevelType.castle:
+                this.generateCastle(level);
                 break;
         }
         return level;
     },
     
-    GenerateOverground: function(level) {
-        var range = this.Distant ? 4 : 6;
-        var offs = this.Distant ? 2 : 1;
+    generateOverground: function(level) {
+        var range = this.distant ? 4 : 6;
+        var offs = this.distant ? 2 : 1;
         var oh = Math.floor(Math.random() * range) + offs;
         var h = Math.floor(Math.random() * range) + offs;
         
         var x = 0, y = 0, h0 = 0, h1 = 0, s = 2;
-        for (x = 0; x < this.Width; x++) {
+        for (x = 0; x < this.width; x++) {
             oh = h;
             while (oh === h) {
                 h = Math.floor(Math.random() * range) + offs;
             }
             
-            for (y = 0; y < this.Height; y++) {
+            for (y = 0; y < this.height; y++) {
                 h0 = (oh < h) ? oh : h;
                 h1 = (oh < h) ? h : oh;
                 s = 2;
                 if (y < h0) {
-                    if (this.Distant){
+                    if (this.distant){
                         s = 2;
                         if (y < 2) { s = y; }
-                        level.SetBlock(x, y, 4 + s * 8);
+                        level.setBlock(x, y, 4 + s * 8);
                     } else {
-                        level.SetBlock(x, y, 5);
+                        level.setBlock(x, y, 5);
                     }
                 } else if (y === h0) {
                     s = h0 === h ? 0 : 1;
-                    s += this.Distant ? 2 : 0;
-                    level.SetBlock(x, y, s);
+                    s += this.distant ? 2 : 0;
+                    level.setBlock(x, y, s);
                 } else if (y === h1) {
                     s = h0 === h ? 0 : 1;
-                    s += this.Distant ? 2 : 0;
-                    level.SetBlock(x, y, s + 16);
+                    s += this.distant ? 2 : 0;
+                    level.setBlock(x, y, s + 16);
                 } else {
                     s = (y > h1) ? 1 : 0;
                     if (h0 === oh) { s = 1 - s; }
-                    s += this.Distant ? 2 : 0;
-                    level.SetBlock(x, y, s + 8);
+                    s += this.distant ? 2 : 0;
+                    level.setBlock(x, y, s + 8);
                 }
             }
         }
     },
     
-    GenerateUnderground: function(level) {
+    generateUnderground: function(level) {
         var x = 0, y = 0, t = 0, yy = 0;
-        if (this.Distant) {
+        if (this.distant) {
             var tt = 0;
-            for (x = 0; x < this.Width; x++) {
+            for (x = 0; x < this.width; x++) {
                 if (Math.random() < 0.75) { tt = 1 - tt; }
             
-                for (y = 0; y < this.Height; y++) {
+                for (y = 0; y < this.height; y++) {
                     t = tt;
                     yy = y - 2;
                     
@@ -92,12 +92,12 @@ Mario.BackgroundGenerator.prototype = {
                         yy = 2;
                         t = 0;
                     }
-                    level.SetBlock(x, y, (4 + t + (3 + yy) * 8));
+                    level.setBlock(x, y, (4 + t + (3 + yy) * 8));
                 }
             }
         } else {
-            for (x = 0; x < this.Width; x++) {
-                for (y = 0; y < this.Height; y++) {
+            for (x = 0; x < this.width; x++) {
+                for (y = 0; y < this.height; y++) {
                     t = x % 2;
                     yy = y - 1;
                     if (yy < 0 || yy > 7) {
@@ -109,17 +109,17 @@ Mario.BackgroundGenerator.prototype = {
                         yy = 0;
                     }
                     
-                    level.SetBlock(x, y, (6 + t + yy * 8));
+                    level.setBlock(x, y, (6 + t + yy * 8));
                 }
             }
         }
     },
     
-    GenerateCastle: function(level) {
+    generateCastle: function(level) {
         var x = 0, y = 0, t = 0, yy = 0;
-        if (this.Distant) {
-            for (x = 0; x < this.Width; x++) {
-                for (y = 0; y < this.Height; y++) {
+        if (this.distant) {
+            for (x = 0; x < this.width; x++) {
+                for (y = 0; y < this.height; y++) {
                     t = x % 2;
                     yy = y - 1;
                     
@@ -143,12 +143,12 @@ Mario.BackgroundGenerator.prototype = {
                         yy = 2;
                     }
                     
-                    level.SetBlock(x, y, (1 + t + (yy + 4) * 8));
+                    level.setBlock(x, y, (1 + t + (yy + 4) * 8));
                 }
             }
         } else {
-            for (x = 0; x < this.Width; x++) {
-                for (y = 0; y < this.Height; y++) {
+            for (x = 0; x < this.width; x++) {
+                for (y = 0; y < this.height; y++) {
                     t = x % 3;
                     yy = y - 1;
                     
@@ -172,7 +172,7 @@ Mario.BackgroundGenerator.prototype = {
                         yy = -3;
                     }
                     
-                    level.SetBlock(x, y, (1 + t + (yy + 3) * 8));
+                    level.setBlock(x, y, (1 + t + (yy + 3) * 8));
                 }
             }
         }

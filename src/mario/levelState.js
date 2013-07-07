@@ -4,191 +4,191 @@
 */
 
 Mario.LevelState = function(difficulty, type) {
-    this.LevelDifficulty = difficulty;
-    this.LevelType = type;
-    this.Level = null;
-    this.Layer = null;
-    this.BgLayer = [];
+    this.levelDifficulty = difficulty;
+    this.levelType = type;
+    this.level = null;
+    this.layer = null;
+    this.bgLayer = [];
     
-    this.Paused = false;
-    this.Sprites = null;
-    this.SpritesToAdd = null;
-    this.SpritesToRemove = null;
-    this.Camera = null;
-    this.ShellsToCheck = null;
-    this.FireballsToCheck = null;
+    this.paused = false;
+    this.sprites = null;
+    this.spritesToAdd = null;
+    this.spritesToRemove = null;
+    this.camera = null;
+    this.shellsToCheck = null;
+    this.fireballsToCheck = null;
     
-    this.FontShadow = null;
-    this.Font = null;
+    this.fontShadow = null;
+    this.font = null;
     
-    this.TimeLeft = 0;
-    this.StartTime = 0;
-    this.FireballsOnScreen = 0;
-    this.Tick = 0;
+    this.timeLeft = 0;
+    this.startTime = 0;
+    this.fireballsOnScreen = 0;
+    this.tick = 0;
     
-    this.Delta = 0;
+    this.delta = 0;
 	
-	this.GotoMapState = false;
-	this.GotoLoseState = false;
+	this.gotoMapState = false;
+	this.gotoLoseState = false;
 };
 
 Mario.LevelState.prototype = new Enjine.GameState();
 
 Mario.LevelState.prototype.enter = function() {
     var levelGenerator = new Mario.LevelGenerator(320, 15), i = 0, scrollSpeed = 0, w = 0, h = 0, bgLevelGenerator = null;
-    this.Level = levelGenerator.CreateLevel(this.LevelType, this.LevelDifficulty);
+    this.level = levelGenerator.createLevel(this.levelType, this.levelDifficulty);
     
     //play music here
-    //if (this.LevelType === Mario.LevelType.Overground) {
-    	//Mario.PlayOvergroundMusic();
-    //} else if (this.LevelType === Mario.LevelType.Underground) {
-    	//Mario.PlayUndergroundMusic();
-    //} else if (this.LevelType === Mario.LevelType.Castle) {
-    	//Mario.PlayCastleMusic();
+    //if (this.levelType === Mario.LevelType.overground) {
+    	//Mario.playOvergroundMusic();
+    //} else if (this.levelType === Mario.LevelType.underground) {
+    	//Mario.playUndergroundMusic();
+    //} else if (this.levelType === Mario.LevelType.castle) {
+    	//Mario.playCastleMusic();
     //}
     
-    this.Paused = false;
-    this.Layer = new Mario.LevelRenderer(this.Level, 320, 240);
-    this.Sprites = new Enjine.DrawableManager();
-    this.Camera = new Enjine.Camera();
-    this.Tick = 0;
+    this.paused = false;
+    this.layer = new Mario.LevelRenderer(this.level, 320, 240);
+    this.sprites = new Enjine.DrawableManager();
+    this.camera = new Enjine.Camera();
+    this.tick = 0;
     
-    this.ShellsToCheck = [];
-    this.FireballsToCheck = [];
-    this.SpritesToAdd = [];
-    this.SpritesToRemove = [];
+    this.shellsToCheck = [];
+    this.fireballsToCheck = [];
+    this.spritesToAdd = [];
+    this.spritesToRemove = [];
     
-    this.FontShadow = Mario.SpriteCuts.CreateBlackFont();
-    this.Font = Mario.SpriteCuts.CreateWhiteFont();
+    this.fontShadow = Mario.SpriteCuts.createBlackFont();
+    this.font = Mario.SpriteCuts.createWhiteFont();
     
     for (i = 0; i < 2; i++) {
         scrollSpeed = 4 >> i;
-        w = ((((this.Level.Width * 16) - 320) / scrollSpeed) | 0) + 320;
-        h = ((((this.Level.Height * 16) - 240) / scrollSpeed) | 0) + 240;
-        bgLevelGenerator = new Mario.BackgroundGenerator(w / 32 + 1, h / 32 + 1, i === 0, this.LevelType);
-        this.BgLayer[i] = new Mario.BackgroundRenderer(bgLevelGenerator.CreateLevel(), 320, 240, scrollSpeed);
+        w = ((((this.level.width * 16) - 320) / scrollSpeed) | 0) + 320;
+        h = ((((this.level.height * 16) - 240) / scrollSpeed) | 0) + 240;
+        bgLevelGenerator = new Mario.BackgroundGenerator(w / 32 + 1, h / 32 + 1, i === 0, this.levelType);
+        this.bgLayer[i] = new Mario.BackgroundRenderer(bgLevelGenerator.createLevel(), 320, 240, scrollSpeed);
     }
     
-    Mario.MarioCharacter.Initialize(this);
+    Mario.MarioCharacter.initialize(this);
 
-    this.Sprites.add(Mario.MarioCharacter);
-    this.StartTime = 1;
-    this.TimeLeft = 200;
+    this.sprites.add(Mario.MarioCharacter);
+    this.startTime = 1;
+    this.timeLeft = 200;
 	
-	this.GotoMapState = false;
-	this.GotoLoseState = false;
+	this.gotoMapState = false;
+	this.gotoLoseState = false;
 };
 
 Mario.LevelState.prototype.exit = function() {
 	
-    delete this.Level;
-    delete this.Layer;
-    delete this.BgLayer;
-    delete this.Sprites;
-    delete this.Camera;
-    delete this.ShellsToCheck;
-    delete this.FireballsToCheck;
-    delete this.FontShadow;
-    delete this.Font;
+    delete this.level;
+    delete this.layer;
+    delete this.bgLayer;
+    delete this.sprites;
+    delete this.camera;
+    delete this.shellsToCheck;
+    delete this.fireballsToCheck;
+    delete this.fontShadow;
+    delete this.font;
 };
 
-Mario.LevelState.prototype.CheckShellCollide = function(shell) {
-    this.ShellsToCheck.push(shell);
+Mario.LevelState.prototype.checkShellCollide = function(shell) {
+    this.shellsToCheck.push(shell);
 };
 
-Mario.LevelState.prototype.CheckFireballCollide = function(fireball) {
-    this.FireballsToCheck.push(fireball);
+Mario.LevelState.prototype.checkFireballCollide = function(fireball) {
+    this.fireballsToCheck.push(fireball);
 };
 
 Mario.LevelState.prototype.update = function(delta) {
     var i = 0, j = 0, xd = 0, yd = 0, sprite = null, hasShotCannon = false, xCannon = 0, x = 0, y = 0,
         dir = 0, st = null, b = 0;
     
-    this.Delta = delta;
+    this.delta = delta;
 	
-    this.TimeLeft -= delta;
-    if ((this.TimeLeft | 0) === 0) {
-        Mario.MarioCharacter.Die();
+    this.timeLeft -= delta;
+    if ((this.timeLeft | 0) === 0) {
+        Mario.MarioCharacter.die();
     }
     
-    if (this.StartTime > 0) {
-        this.StartTime++;
+    if (this.startTime > 0) {
+        this.startTime++;
     }
     
-    this.Camera.X = Mario.MarioCharacter.X - 160;
-    if (this.Camera.X < 0) {
-        this.Camera.X = 0;
+    this.camera.x = Mario.MarioCharacter.x - 160;
+    if (this.camera.x < 0) {
+        this.camera.x = 0;
     }
-    if (this.Camera.X > this.Level.Width * 16 - 320) {
-        this.Camera.X = this.Level.Width * 16 - 320;
+    if (this.camera.x > this.level.width * 16 - 320) {
+        this.camera.x = this.level.width * 16 - 320;
     }
     
-    this.FireballsOnScreen = 0;
+    this.fireballsOnScreen = 0;
     
-    for (i = 0; i < this.Sprites.objects.length; i++) {
-        sprite = this.Sprites.objects[i];
+    for (i = 0; i < this.sprites.objects.length; i++) {
+        sprite = this.sprites.objects[i];
         if (sprite !== Mario.MarioCharacter) {
-            xd = sprite.X - this.Camera.X;
-            yd = sprite.Y - this.Camera.Y;
+            xd = sprite.x - this.camera.x;
+            yd = sprite.y - this.camera.y;
             if (xd < -64 || xd > 320 + 64 || yd < -64 || yd > 240 + 64) {
-                this.Sprites.removeAt(i);
+                this.sprites.remove(sprite);
             } else {
                 if (sprite instanceof Mario.Fireball) {
-                    this.FireballsOnScreen++;
+                    this.fireballsOnScreen++;
                 }
             }
         }
     }
     
-    if (this.Paused) {
-        for (i = 0; i < this.Sprites.objects.length; i++) {
-            if (this.Sprites.objects[i] === Mario.MarioCharacter) {
-                this.Sprites.objects[i].Update(delta);
+    if (this.paused) {
+        for (i = 0; i < this.sprites.objects.length; i++) {
+            if (this.sprites.objects[i] === Mario.MarioCharacter) {
+                this.sprites.objects[i].update(delta);
             } else {
-                this.Sprites.objects[i].UpdateNoMove(delta);
+                this.sprites.objects[i].updateNoMove(delta);
             }
         }
     } else {
-        this.Layer.Update(delta);
-        this.Level.Update();
+        this.layer.update(delta);
+        this.level.update();
         
         hasShotCannon = false;
         xCannon = 0;
-		this.Tick++;
+		this.tick++;
         
-        for (x = ((this.Camera.X / 16) | 0) - 1; x <= (((this.Camera.X + this.Layer.Width) / 16) | 0) + 1; x++) {
-            for (y = ((this.Camera.Y / 16) | 0) - 1; y <= (((this.Camera.Y + this.Layer.Height) / 16) | 0) + 1; y++) {
+        for (x = ((this.camera.x / 16) | 0) - 1; x <= (((this.camera.x + this.layer.width) / 16) | 0) + 1; x++) {
+            for (y = ((this.camera.y / 16) | 0) - 1; y <= (((this.camera.y + this.layer.height) / 16) | 0) + 1; y++) {
                 dir = 0;
                 
-                if (x * 16 + 8 > Mario.MarioCharacter.X + 16) {
+                if (x * 16 + 8 > Mario.MarioCharacter.x + 16) {
                     dir = -1;
                 }
-                if (x * 16 + 8 < Mario.MarioCharacter.X - 16) {
+                if (x * 16 + 8 < Mario.MarioCharacter.x - 16) {
                     dir = 1;
                 }
                 
-                st = this.Level.GetSpriteTemplate(x, y);
+                st = this.level.getSpriteTemplate(x, y);
                 
                 if (st !== null) {
-                    if (st.LastVisibleTick !== this.Tick - 1) {
-                        if (st.Sprite === null || !this.Sprites.contains(st.Sprite)) {
-                            st.Spawn(this, x, y, dir);
+                    if (st.lastVisibleTick !== this.tick - 1) {
+                        if (st.sprite === null || !this.sprites.contains(st.sprite)) {
+                            st.spawn(this, x, y, dir);
                         }
                     }
                     
-                    st.LastVisibleTick = this.Tick;
+                    st.lastVisibleTick = this.tick;
                 }
                 
                 if (dir !== 0) {
-                    b = this.Level.GetBlock(x, y);
-                    if (((Mario.Tile.Behaviors[b & 0xff]) & Mario.Tile.Animated) > 0) {
+                    b = this.level.getBlock(x, y);
+                    if (((Mario.Tile.behaviors[b & 0xff]) & Mario.Tile.animated) > 0) {
                         if ((((b % 16) / 4) | 0) === 3 && ((b / 16) | 0) === 0) {
-                            if ((this.Tick - x * 2) % 100 === 0) {
+                            if ((this.tick - x * 2) % 100 === 0) {
                                 xCannon = x;
                                 for (i = 0; i < 8; i++) {
-                                    this.AddSprite(new Mario.Sparkle(this, x * 16 + 8, y * 16 + ((Math.random() * 16) | 0), Math.random() * dir, 0, 0, 1, 5));
+                                    this.addSprite(new Mario.Sparkle(this, x * 16 + 8, y * 16 + ((Math.random() * 16) | 0), Math.random() * dir, 0, 0, 1, 5));
                                 }
-                                this.AddSprite(new Mario.BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
+                                this.addSprite(new Mario.BulletBill(this, x * 16 + 8 + dir * 8, y * 16 + 15, dir));
                                 hasShotCannon = true;
                             }
                         }
@@ -198,155 +198,155 @@ Mario.LevelState.prototype.update = function(delta) {
         }
         
         if (hasShotCannon) {
-            Enjine.Resources.PlaySound("cannon");
+            Enjine.Resources.playSound("cannon");
         }
         
-        for (i = 0; i < this.Sprites.objects.length; i++) {
-            this.Sprites.objects[i].update(delta);
+        for (i = 0; i < this.sprites.objects.length; i++) {
+            this.sprites.objects[i].update(delta);
         }
         
-        for (i = 0; i < this.Sprites.objects.length; i++) {
-            this.Sprites.objects[i].CollideCheck();
+        for (i = 0; i < this.sprites.objects.length; i++) {
+            this.sprites.objects[i].collideCheck();
         }
         
-        for (i = 0; i < this.ShellsToCheck.length; i++) {
-            for (j = 0; j < this.Sprites.objects.length; j++) {
-                if (this.Sprites.objects[j] !== this.ShellsToCheck[i] && !this.ShellsToCheck[i].Dead) {
-                    if (this.Sprites.objects[j].ShellCollideCheck(this.ShellsToCheck[i])) {
-                        if (Mario.MarioCharacter.Carried === this.ShellsToCheck[i] && !this.ShellsToCheck[i].Dead) {
-                            Mario.MarioCharacter.Carried = null;
-                            this.ShellsToCheck[i].Die();
+        for (i = 0; i < this.shellsToCheck.length; i++) {
+            for (j = 0; j < this.sprites.objects.length; j++) {
+                if (this.sprites.objects[j] !== this.shellsToCheck[i] && !this.shellsToCheck[i].dead) {
+                    if (this.sprites.objects[j].shellCollideCheck(this.shellsToCheck[i])) {
+                        if (Mario.MarioCharacter.carried === this.shellsToCheck[i] && !this.shellsToCheck[i].dead) {
+                            Mario.MarioCharacter.carried = null;
+                            this.shellsToCheck[i].die();
                         }
                     }
                 }
             }
         }
-        this.ShellsToCheck.length = 0;
+        this.shellsToCheck.length = 0;
         
-        for (i = 0; i < this.FireballsToCheck.length; i++) {
-            for (j = 0; j < this.Sprites.objects.length; j++) {
-                if (this.Sprites.objects[j] !== this.FireballsToCheck[i] && !this.FireballsToCheck[i].Dead) {
-                    if (this.Sprites.objects[j].FireballCollideCheck(this.FireballsToCheck[i])) {
-                        this.FireballsToCheck[i].Die();
+        for (i = 0; i < this.fireballsToCheck.length; i++) {
+            for (j = 0; j < this.sprites.objects.length; j++) {
+                if (this.sprites.objects[j] !== this.fireballsToCheck[i] && !this.fireballsToCheck[i].dead) {
+                    if (this.sprites.objects[j].fireballCollideCheck(this.fireballsToCheck[i])) {
+                        this.fireballsToCheck[i].die();
                     }
                 }
             }
         }
         
-        this.FireballsToCheck.length = 0;
+        this.fireballsToCheck.length = 0;
     }
     
-    this.Sprites.addRange(this.SpritesToAdd);
-    this.Sprites.removeList(this.SpritesToRemove);
-    this.SpritesToAdd.length = 0;
-    this.SpritesToRemove.length = 0;
+    this.sprites.add(this.spritesToAdd);
+    this.sprites.remove(this.spritesToRemove);
+    this.spritesToAdd.length = 0;
+    this.spritesToRemove.length = 0;
     
-    this.Camera.X = (Mario.MarioCharacter.XOld + (Mario.MarioCharacter.X - Mario.MarioCharacter.XOld) * delta) - 160;
-    this.Camera.Y = (Mario.MarioCharacter.YOld + (Mario.MarioCharacter.Y - Mario.MarioCharacter.YOld) * delta) - 120;
+    this.camera.x = (Mario.MarioCharacter.xOld + (Mario.MarioCharacter.x - Mario.MarioCharacter.xOld) * delta) - 160;
+    this.camera.y = (Mario.MarioCharacter.yOld + (Mario.MarioCharacter.y - Mario.MarioCharacter.yOld) * delta) - 120;
 };
 
 Mario.LevelState.prototype.draw = function(context) {
     var i = 0, time = 0, t = 0;
     
-    if (this.Camera.X < 0) {
-        this.Camera.X = 0;
+    if (this.camera.x < 0) {
+        this.camera.x = 0;
     }
-    if (this.Camera.Y < 0) {
-        this.Camera.Y = 0;
+    if (this.camera.y < 0) {
+        this.camera.y = 0;
     }
-    if (this.Camera.X > this.Level.Width * 16 - 320) {
-        this.Camera.X = this.Level.Width * 16 - 320;
+    if (this.camera.x > this.level.width * 16 - 320) {
+        this.camera.x = this.level.width * 16 - 320;
     }
-    if (this.Camera.Y > this.Level.Height * 16 - 240) {
-        this.Camera.Y = this.Level.Height * 16 - 240;
+    if (this.camera.y > this.level.height * 16 - 240) {
+        this.camera.y = this.level.height * 16 - 240;
     }
     
     for (i = 0; i < 2; i++) {
-        this.BgLayer[i].Draw(context, this.Camera);
+        this.bgLayer[i].draw(context, this.camera);
     }
     
     context.save();
-    context.translate(-this.Camera.X, -this.Camera.Y);
-    for (i = 0; i < this.Sprites.objects.length; i++) {
-        if (this.Sprites.objects[i].Layer === 0) {
-            this.Sprites.objects[i].Draw(context, this.Camera);
+    context.translate(-this.camera.x, -this.camera.y);
+    for (i = 0; i < this.sprites.objects.length; i++) {
+        if (this.sprites.objects[i].layer === 0) {
+            this.sprites.objects[i].draw(context, this.camera);
         }
     }
     context.restore();
     
-    this.Layer.Draw(context, this.Camera);
-    this.Layer.DrawExit0(context, this.Camera, Mario.MarioCharacter.WinTime === 0);
+    this.layer.draw(context, this.camera);
+    this.layer.drawExit0(context, this.camera, Mario.MarioCharacter.winTime === 0);
     
     context.save();
-    context.translate(-this.Camera.X, -this.Camera.Y);
-    for (i = 0; i < this.Sprites.objects.length; i++) {
-        if (this.Sprites.objects[i].Layer === 1) {
-            this.Sprites.objects[i].Draw(context, this.Camera);
+    context.translate(-this.camera.x, -this.camera.y);
+    for (i = 0; i < this.sprites.objects.length; i++) {
+        if (this.sprites.objects[i].layer === 1) {
+            this.sprites.objects[i].draw(context, this.camera);
         }
     }
     context.restore();
     
-    this.Layer.DrawExit1(context, this.Camera);
+    this.layer.drawExit1(context, this.camera);
     
-    this.DrawStringShadow(context, "MARIO " + Mario.MarioCharacter.Lives, 0, 0);
-    this.DrawStringShadow(context, "00000000", 0, 1);
-    this.DrawStringShadow(context, "COIN", 14, 0);
-    this.DrawStringShadow(context, " " + Mario.MarioCharacter.Coins, 14, 1);
-    this.DrawStringShadow(context, "WORLD", 24, 0);
-    this.DrawStringShadow(context, " " + Mario.MarioCharacter.LevelString, 24, 1);
-    this.DrawStringShadow(context, "TIME", 34, 0);
-    time = this.TimeLeft | 0;
+    this.drawStringShadow(context, "MARIO " + Mario.MarioCharacter.lives, 0, 0);
+    this.drawStringShadow(context, "00000000", 0, 1);
+    this.drawStringShadow(context, "COIN", 14, 0);
+    this.drawStringShadow(context, " " + Mario.MarioCharacter.coins, 14, 1);
+    this.drawStringShadow(context, "WORLD", 24, 0);
+    this.drawStringShadow(context, " " + Mario.MarioCharacter.levelString, 24, 1);
+    this.drawStringShadow(context, "TIME", 34, 0);
+    time = this.timeLeft | 0;
     if (time < 0) {
         time = 0;
     }
-    this.DrawStringShadow(context, " " + time, 34, 1);
+    this.drawStringShadow(context, " " + time, 34, 1);
     
-    if (this.StartTime > 0) {
-        t = this.StartTime + this.Delta - 2;
+    if (this.startTime > 0) {
+        t = this.startTime + this.delta - 2;
         t = t * t * 0.6;
-        this.RenderBlackout(context, 160, 120, t | 0);
+        this.renderBlackout(context, 160, 120, t | 0);
     }
     
-    if (Mario.MarioCharacter.WinTime > 0) {
-    	//Mario.StopMusic();
-        t = Mario.MarioCharacter.WinTime + this.Delta;
+    if (Mario.MarioCharacter.winTime > 0) {
+    	//Mario.stopMusic();
+        t = Mario.MarioCharacter.winTime + this.delta;
         t = t * t * 0.2;
         
         if (t > 900) {
             //TODO: goto map state with level won
-			Mario.GlobalMapState.LevelWon();
-			this.GotoMapState = true;
+			Mario.globalMapState.levelWon();
+			this.gotoMapState = true;
         }
         
-        this.RenderBlackout(context, ((Mario.MarioCharacter.XDeathPos - this.Camera.X) | 0), ((Mario.MarioCharacter.YDeathPos - this.Camera.Y) | 0), (320 - t) | 0);
+        this.renderBlackout(context, ((Mario.MarioCharacter.xDeathPos - this.camera.x) | 0), ((Mario.MarioCharacter.yDeathPos - this.camera.y) | 0), (320 - t) | 0);
     }
     
-    if (Mario.MarioCharacter.DeathTime > 0) {
-    	//Mario.StopMusic();
-        t = Mario.MarioCharacter.DeathTime + this.Delta;
+    if (Mario.MarioCharacter.deathTime > 0) {
+    	//Mario.stopMusic();
+        t = Mario.MarioCharacter.deathTime + this.delta;
         t = t * t * 0.1;
         
         if (t > 900) {
             //TODO: goto map with level lost
-			Mario.MarioCharacter.Lives--;
-			this.GotoMapState = true;
-			if (Mario.MarioCharacter.Lives <= 0) {
-				this.GotoLoseState = true;
+			Mario.MarioCharacter.lives--;
+			this.gotoMapState = true;
+			if (Mario.MarioCharacter.lives <= 0) {
+				this.gotoLoseState = true;
 			}
         }
         
-        this.RenderBlackout(context, ((Mario.MarioCharacter.XDeathPos - this.Camera.X) | 0), ((Mario.MarioCharacter.YDeathPos - this.Camera.Y) | 0), (320 - t) | 0);
+        this.renderBlackout(context, ((Mario.MarioCharacter.xDeathPos - this.camera.x) | 0), ((Mario.MarioCharacter.yDeathPos - this.camera.y) | 0), (320 - t) | 0);
     }
 };
 
-Mario.LevelState.prototype.DrawStringShadow = function(context, string, x, y) {
-    this.Font.Strings[0] = { String: string, X: x * 8 + 4, Y: y * 8 + 4 };
-    this.FontShadow.Strings[0] = { String: string, X: x * 8 + 5, Y: y * 8 + 5 };
-    this.FontShadow.Draw(context, this.Camera);
-    this.Font.Draw(context, this.Camera);
+Mario.LevelState.prototype.drawStringShadow = function(context, string, x, y) {
+    this.font.strings[0] = { string: string, x: x * 8 + 4, y: y * 8 + 4 };
+    this.fontShadow.strings[0] = { string: string, x: x * 8 + 5, y: y * 8 + 5 };
+    this.fontShadow.draw(context, this.camera);
+    this.font.draw(context, this.camera);
 };
 
-Mario.LevelState.prototype.RenderBlackout = function(context, x, y, radius) {
+Mario.LevelState.prototype.renderBlackout = function(context, x, y, radius) {
     if (radius > 320) {
         return;
     }
@@ -400,71 +400,71 @@ Mario.LevelState.prototype.RenderBlackout = function(context, x, y, radius) {
     context.fill();
 };
 
-Mario.LevelState.prototype.AddSprite = function(sprite) {
-    this.Sprites.add(sprite);
+Mario.LevelState.prototype.addSprite = function(sprite) {
+    this.sprites.add(sprite);
 };
 
-Mario.LevelState.prototype.RemoveSprite = function(sprite) {
-    this.Sprites.remove(sprite);
+Mario.LevelState.prototype.removeSprite = function(sprite) {
+    this.sprites.remove(sprite);
 };
 
-Mario.LevelState.prototype.Bump = function(x, y, canBreakBricks) {
-    var block = this.Level.GetBlock(x, y), xx = 0, yy = 0;
+Mario.LevelState.prototype.bump = function(x, y, canBreakBricks) {
+    var block = this.level.getBlock(x, y), xx = 0, yy = 0;
     
-    if ((Mario.Tile.Behaviors[block & 0xff] & Mario.Tile.Bumpable) > 0) {
-        this.BumpInto(x, y - 1);
-        this.Level.SetBlock(x, y, 4);
-        this.Level.SetBlockData(x, y, 4);
+    if ((Mario.Tile.behaviors[block & 0xff] & Mario.Tile.bumpable) > 0) {
+        this.bumpInto(x, y - 1);
+        this.level.setBlock(x, y, 4);
+        this.level.setBlockData(x, y, 4);
         
-        if ((Mario.Tile.Behaviors[block & 0xff] & Mario.Tile.Special) > 0) {
-            Enjine.Resources.PlaySound("sprout");
-            if (!Mario.MarioCharacter.Large) {
-                this.AddSprite(new Mario.Mushroom(this, x * 16 + 8, y * 16 + 8));
+        if ((Mario.Tile.behaviors[block & 0xff] & Mario.Tile.special) > 0) {
+            Enjine.Resources.playSound("sprout");
+            if (!Mario.MarioCharacter.large) {
+                this.addSprite(new Mario.Mushroom(this, x * 16 + 8, y * 16 + 8));
             } else {
-                this.AddSprite(new Mario.FireFlower(this, x * 16 + 8, y * 16 + 8));
+                this.addSprite(new Mario.FireFlower(this, x * 16 + 8, y * 16 + 8));
             }
         } else {
-            Mario.MarioCharacter.GetCoin();
-            Enjine.Resources.PlaySound("coin");
-            this.AddSprite(new Mario.CoinAnim(this, x, y));
+            Mario.MarioCharacter.getCoin();
+            Enjine.Resources.playSound("coin");
+            this.addSprite(new Mario.CoinAnim(this, x, y));
         }
     }
     
-    if ((Mario.Tile.Behaviors[block & 0xff] & Mario.Tile.Breakable) > 0) {
-        this.BumpInto(x, y - 1);
+    if ((Mario.Tile.behaviors[block & 0xff] & Mario.Tile.breakable) > 0) {
+        this.bumpInto(x, y - 1);
         if (canBreakBricks) {
-            Enjine.Resources.PlaySound("breakblock");
-            this.Level.SetBlock(x, y, 0);
+            Enjine.Resources.playSound("breakblock");
+            this.level.setBlock(x, y, 0);
             for (xx = 0; xx < 2; xx++) {
                 for (yy = 0; yy < 2; yy++) {
-                    this.AddSprite(new Mario.Particle(this, x * 16 + xx * 8 + 4, y * 16 + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
+                    this.addSprite(new Mario.Particle(this, x * 16 + xx * 8 + 4, y * 16 + yy * 8 + 4, (xx * 2 - 1) * 4, (yy * 2 - 1) * 4 - 8));
                 }
             }
         }
     }
 };
 
-Mario.LevelState.prototype.BumpInto = function(x, y) {
-    var block = this.Level.GetBlock(x, y), i = 0;
-    if (((Mario.Tile.Behaviors[block & 0xff]) & Mario.Tile.PickUpable) > 0) {
-        Mario.MarioCharacter.GetCoin();
-        Enjine.Resources.PlaySound("coin");
-        this.Level.SetBlock(x, y, 0);
-        this.AddSprite(new Mario.CoinAnim(x, y + 1));
+Mario.LevelState.prototype.bumpInto = function(x, y) {
+    var block = this.level.getBlock(x, y), i = 0;
+    if (((Mario.Tile.behaviors[block & 0xff]) & Mario.Tile.pickUpable) > 0) {
+        Mario.MarioCharacter.getCoin();
+        Enjine.Resources.playSound("coin");
+        this.level.setBlock(x, y, 0);
+        this.addSprite(new Mario.CoinAnim(x, y + 1));
     }
     
-    for (i = 0; i < this.Sprites.objects.length; i++) {
-        this.Sprites.objects[i].BumpCheck(x, y);
+    for (i = 0; i < this.sprites.objects.length; i++) {
+        this.sprites.objects[i].bumpCheck(x, y);
     }
 };
 
 Mario.LevelState.prototype.checkForChange = function(context) {
-	if (this.GotoLoseState) {
-		context.ChangeState(new Mario.LoseState());
+	if (this.gotoLoseState) {
+		context.changeState(new Mario.LoseState());
 	}
 	else {
-		if (this.GotoMapState) {
-			context.ChangeState(Mario.GlobalMapState);
+		if (this.gotoMapState) {
+			context.changeState(Mario.globalMapState);
 		}
 	}
 };

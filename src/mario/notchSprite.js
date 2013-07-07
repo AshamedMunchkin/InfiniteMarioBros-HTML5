@@ -5,75 +5,75 @@
 */
 
 Mario.NotchSprite = function(image) {
-    this.XOld = 0; this.YOld = 0;
-    this.X = 0; this.Y = 0;
-    this.Xa = 0; this.Ya = 0;
-    this.XPic = 0; this.YPic = 0;
-    this.XPicO = 0; this.YPicO = 0;
-    this.PicWidth = 32; this.PicHeight = 32;
-    this.XFlip = false; this.YFlip = false;
-    this.Visible = true;
-    this.Image = image;
-    this.Delta = 0;
-    this.SpriteTemplate = null;
-    this.Layer = 1;
+    this.xOld = 0; this.yOld = 0;
+    this.x = 0; this.y = 0;
+    this.xa = 0; this.ya = 0;
+    this.xPic = 0; this.yPic = 0;
+    this.xPicO = 0; this.yPicO = 0;
+    this.picWidth = 32; this.picHeight = 32;
+    this.xFlip = false; this.yFlip = false;
+    this.visible = true;
+    this.image = image;
+    this.delta = 0;
+    this.spriteTemplate = null;
+    this.layer = 1;
 };
 
 Mario.NotchSprite.prototype = new Enjine.Drawable();
 
 Mario.NotchSprite.prototype.draw = function(context, camera) {
     var xPixel = 0, yPixel = 0;
-    if (!this.Visible) {
+    if (!this.visible) {
         return;
     }
     
-    xPixel = ((this.XOld + (this.X - this.XOld) * this.Delta) | 0) - this.XPicO;
-    yPixel = ((this.YOld + (this.Y - this.YOld) * this.Delta) | 0) - this.YPicO;
+    xPixel = ((this.xOld + (this.x - this.xOld) * this.delta) | 0) - this.xPicO;
+    yPixel = ((this.yOld + (this.y - this.yOld) * this.delta) | 0) - this.yPicO;
     
     context.save();
-    context.scale(this.XFlip ? -1 : 1, this.YFlip ? -1 : 1);
-    context.translate(this.XFlip ? -320 : 0, this.YFlip ? -240 : 0);
-    context.drawImage(this.Image, this.XPic * this.PicWidth, this.YPic * this.PicHeight, this.PicWidth, this.PicHeight,
-        this.XFlip ? (320 - xPixel - this.PicWidth) : xPixel, this.YFlip ? (240 - yPixel - this.PicHeight) : yPixel, this.PicWidth, this.PicHeight);
+    context.scale(this.xFlip ? -1 : 1, this.yFlip ? -1 : 1);
+    context.translate(this.xFlip ? -320 : 0, this.yFlip ? -240 : 0);
+    context.drawImage(this.image, this.xPic * this.picWidth, this.yPic * this.picHeight, this.picWidth, this.picHeight,
+        this.xFlip ? (320 - xPixel - this.picWidth) : xPixel, this.yFlip ? (240 - yPixel - this.picHeight) : yPixel, this.picWidth, this.picHeight);
     context.restore();
 };
 
-Mario.NotchSprite.prototype.Update = function(delta) {
-    this.XOld = this.X;
-    this.YOld = this.Y;
-    this.Move();
-    this.Delta = delta;
+Mario.NotchSprite.prototype.update = function(delta) {
+    this.xOld = this.x;
+    this.yOld = this.y;
+    this.move();
+    this.delta = delta;
 };
 
-Mario.NotchSprite.prototype.UpdateNoMove = function(delta) {
-    this.XOld = this.X;
-    this.YOld = this.Y;
-    this.Delta = 0;
+Mario.NotchSprite.prototype.updateNoMove = function(delta) {
+    this.xOld = this.x;
+    this.yOld = this.y;
+    this.delta = 0;
 };
 
-Mario.NotchSprite.prototype.Move = function() {
-    this.X += this.Xa;
-    this.Y += this.Ya;
+Mario.NotchSprite.prototype.move = function() {
+    this.x += this.xa;
+    this.y += this.ya;
 };
 
-Mario.NotchSprite.prototype.GetX = function(delta) {
-    return ((this.XOld + (this.X - this.XOld) * delta) | 0) - this.XPicO;
+Mario.NotchSprite.prototype.getX = function(delta) {
+    return ((this.xOld + (this.x - this.xOld) * delta) | 0) - this.xPicO;
 };
 
-Mario.NotchSprite.prototype.GetY = function(delta) {
-    return ((this.YOld + (this.Y - this.YOld) * delta) | 0) - this.YPicO;
+Mario.NotchSprite.prototype.getY = function(delta) {
+    return ((this.yOld + (this.y - this.yOld) * delta) | 0) - this.yPicO;
 };
 
-Mario.NotchSprite.prototype.CollideCheck = function() { };
+Mario.NotchSprite.prototype.collideCheck = function() { };
 
-Mario.NotchSprite.prototype.BumpCheck = function(xTile, yTile) { };
+Mario.NotchSprite.prototype.bumpCheck = function(xTile, yTile) { };
 
-Mario.NotchSprite.prototype.Release = function(mario) { };
+Mario.NotchSprite.prototype.release = function(mario) { };
 
-Mario.NotchSprite.prototype.ShellCollideCheck = function(shell) {
+Mario.NotchSprite.prototype.shellCollideCheck = function(shell) {
     return false;
 };
 
-Mario.NotchSprite.prototype.FireballCollideCheck = function(fireball) {
+Mario.NotchSprite.prototype.fireballCollideCheck = function(fireball) {
     return false;
 };

@@ -4,17 +4,17 @@
 */
 
 Mario.Tile = {
-    BlockUpper: 1 << 0,
-    BlockAll: 1 << 1,
-    BlockLower: 1 << 2,
-    Special: 1 << 3,
-    Bumpable: 1 << 4,
-    Breakable: 1 << 5,
-    PickUpable: 1 << 6,
-    Animated: 1 << 7,
-    Behaviors: [],
+    blockUpper: 1 << 0,
+    blockAll: 1 << 1,
+    blockLower: 1 << 2,
+    special: 1 << 3,
+    bumpable: 1 << 4,
+    breakable: 1 << 5,
+    pickUpable: 1 << 6,
+    animated: 1 << 7,
+    behaviors: [],
     
-    LoadBehaviors: function() {
+    loadBehaviors: function() {
         var b = [];
         b[0] = 0;
         b[1] = 20;
@@ -148,114 +148,114 @@ Mario.Tile = {
             b[i] = 0;
         }
         
-        this.Behaviors = b;
+        this.behaviors = b;
     }
 };
 
 Mario.LevelType = {
-    Overground: 0,
-    Underground: 1,
-    Castle: 2
+    overground: 0,
+    underground: 1,
+    castle: 2
 };
 
 Mario.Odds = {
-    Straight: 0,
-    HillStraight: 1,
-    Tubes: 2,
-    Jump: 3,
-    Cannons: 4
+    straight: 0,
+    hillStraight: 1,
+    tubes: 2,
+    jump: 3,
+    cannons: 4
 };
 
 Mario.Level = function(width, height) {
-    this.Width = width;
-    this.Height = height;
-    this.ExitX = 10;
-    this.ExitY = 10;
+    this.width = width;
+    this.height = height;
+    this.exitX = 10;
+    this.exitY = 10;
     
-    this.Map = [];
-    this.Data = [];
-    this.SpriteTemplates = [];
+    this.map = [];
+    this.data = [];
+    this.spriteTemplates = [];
     
     var x = 0, y = 0;
-    for (x = 0; x < this.Width; x++) {
-        this.Map[x] = [];
-        this.Data[x] = [];
-        this.SpriteTemplates[x] = [];
+    for (x = 0; x < this.width; x++) {
+        this.map[x] = [];
+        this.data[x] = [];
+        this.spriteTemplates[x] = [];
         
-        for (y = 0; y < this.Height; y++) {
-            this.Map[x][y] = 0;
-            this.Data[x][y] = 0;
-            this.SpriteTemplates[x][y] = null;
+        for (y = 0; y < this.height; y++) {
+            this.map[x][y] = 0;
+            this.data[x][y] = 0;
+            this.spriteTemplates[x][y] = null;
         }
     }
 };
 
 Mario.Level.prototype = {
-    Update: function() {
+    update: function() {
         var x = 0, y = 0;
-        for (x = 0; x < this.Width; x++) {
-            for (y = 0; y < this.Height; y++) {
-                if (this.Data[x][y] > 0) {
-                    this.Data[x][y]--;
+        for (x = 0; x < this.width; x++) {
+            for (y = 0; y < this.height; y++) {
+                if (this.data[x][y] > 0) {
+                    this.data[x][y]--;
                 }
             }
         }
     },
     
-    GetBlockCapped: function(x, y) {
+    getBlockCapped: function(x, y) {
         if (x < 0) { x = 0; }
         if (y < 0) { y = 0; }
-        if (x >= this.Width) { x = this.Width - 1; }
-        if (y >= this.Height) { y = this.Height - 1; }
-        return this.Map[x][y];
+        if (x >= this.width) { x = this.width - 1; }
+        if (y >= this.height) { y = this.height - 1; }
+        return this.map[x][y];
     },
     
-    GetBlock: function(x, y) {
+    getBlock: function(x, y) {
         if (x < 0) { x = 0; }
         if (y < 0) { return 0; }
-        if (x >= this.Width) { x = this.Width - 1; }
-        if (y >= this.Height) { y = this.Height - 1; }
-        return this.Map[x][y];
+        if (x >= this.width) { x = this.width - 1; }
+        if (y >= this.height) { y = this.height - 1; }
+        return this.map[x][y];
     },
     
-    SetBlock: function(x, y, block) {
+    setBlock: function(x, y, block) {
         if (x < 0) { return; }
         if (y < 0) { return; }
-        if (x >= this.Width) { return; }
-        if (y >= this.Height) { return; }
-        this.Map[x][y] = block;
+        if (x >= this.width) { return; }
+        if (y >= this.height) { return; }
+        this.map[x][y] = block;
     },
     
-    SetBlockData: function(x, y, data) {
+    setBlockData: function(x, y, data) {
         if (x < 0) { return; }
         if (y < 0) { return; }
-        if (x >= this.Width) { return; }
-        if (y >= this.Height) { return; }
-        this.Data[x][y] = data;
+        if (x >= this.width) { return; }
+        if (y >= this.height) { return; }
+        this.data[x][y] = data;
     },
     
-    IsBlocking: function(x, y, xa, ya) {
-        var block = this.GetBlock(x, y);
-        var blocking = ((Mario.Tile.Behaviors[block & 0xff]) & Mario.Tile.BlockAll) > 0;
-        blocking |= (ya > 0) && ((Mario.Tile.Behaviors[block & 0xff]) & Mario.Tile.BlockUpper) > 0;
-        blocking |= (ya < 0) && ((Mario.Tile.Behaviors[block & 0xff]) & Mario.Tile.BlockLower) > 0;
+    isBlocking: function(x, y, xa, ya) {
+        var block = this.getBlock(x, y);
+        var blocking = ((Mario.Tile.behaviors[block & 0xff]) & Mario.Tile.blockAll) > 0;
+        blocking |= (ya > 0) && ((Mario.Tile.behaviors[block & 0xff]) & Mario.Tile.blockUpper) > 0;
+        blocking |= (ya < 0) && ((Mario.Tile.behaviors[block & 0xff]) & Mario.Tile.blockLower) > 0;
 
         return blocking;
     },
     
-    GetSpriteTemplate: function(x, y) {
+    getSpriteTemplate: function(x, y) {
         if (x < 0) { return null; }
         if (y < 0) { return null; }
-        if (x >= this.Width) { return null; }
-        if (y >= this.Height) { return null; }
-        return this.SpriteTemplates[x][y];
+        if (x >= this.width) { return null; }
+        if (y >= this.height) { return null; }
+        return this.spriteTemplates[x][y];
     },
     
-    SetSpriteTemplate: function(x, y, template) {
+    setSpriteTemplate: function(x, y, template) {
         if (x < 0) { return; }
         if (y < 0) { return; }
-        if (x >= this.Width) { return; }
-        if (y >= this.Height) { return; }
-        this.SpriteTemplates[x][y] = template;
+        if (x >= this.width) { return; }
+        if (y >= this.height) { return; }
+        this.spriteTemplates[x][y] = template;
     }
 };

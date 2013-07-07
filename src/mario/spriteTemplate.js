@@ -4,25 +4,25 @@
 */
 
 Mario.SpriteTemplate = function(type, winged) {
-    this.Type = type;
-    this.Winged = winged;
-    this.LastVisibleTick = -1;
-    this.IsDead = false;
-    this.Sprite = null;
+    this.type = type;
+    this.winged = winged;
+    this.lastVisibleTick = -1;
+    this.isDead = false;
+    this.sprite = null;
 };
 
 Mario.SpriteTemplate.prototype = {
-    Spawn: function(world, x, y, dir) {
-        if (this.IsDead) {
+    spawn: function(world, x, y, dir) {
+        if (this.isDead) {
             return;
         }
         
-        if (this.Type === Mario.Enemy.Flower) {
-            this.Sprite = new Mario.FlowerEnemy(world, x * 16 + 15, y * 16 + 24);
+        if (this.type === Mario.Enemy.flower) {
+            this.sprite = new Mario.FlowerEnemy(world, x * 16 + 15, y * 16 + 24);
         } else {
-            this.Sprite = new Mario.Enemy(world, x * 16 + 8, y * 16 + 15, dir, this.Type, this.Winged);
+            this.sprite = new Mario.Enemy(world, x * 16 + 8, y * 16 + 15, dir, this.type, this.winged);
         }
-        this.Sprite.SpriteTemplate = this;
-        world.AddSprite(this.Sprite);
+        this.sprite.spriteTemplate = this;
+        world.addSprite(this.sprite);
     }
 };

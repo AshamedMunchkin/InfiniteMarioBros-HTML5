@@ -4,191 +4,191 @@
 */
 
 Mario.Mushroom = function(world, x, y) {
-    this.RunTime = 0;
-    this.GroundInertia = 0.89;
-    this.AirInertia = 0.89;
-    this.OnGround = false;
-    this.Width = 4;
-    this.Height = 24;
-    this.World = world;
-    this.X = x;
-    this.Y = y;
-    this.Image = Enjine.Resources.Images["items"];
-    this.XPicO = 8;
-    this.YPicO = 15;
-    this.YPic = 0;
-    this.Height = 12;
-    this.Facing = 1;
-    this.PicWidth = this.PicHeight = 16;
-    this.Life = 0;
+    this.runTime = 0;
+    this.groundInertia = 0.89;
+    this.airInertia = 0.89;
+    this.onGround = false;
+    this.width = 4;
+    this.height = 24;
+    this.world = world;
+    this.x = x;
+    this.y = y;
+    this.image = Enjine.Resources.images["items"];
+    this.xPicO = 8;
+    this.yPicO = 15;
+    this.yPic = 0;
+    this.height = 12;
+    this.facing = 1;
+    this.picWidth = this.picHeight = 16;
+    this.life = 0;
 };
 
 Mario.Mushroom.prototype = new Mario.NotchSprite();
 
-Mario.Mushroom.prototype.CollideCheck = function() {
-    var xMarioD = Mario.MarioCharacter.X - this.X, yMarioD = Mario.MarioCharacter.Y - this.Y;
+Mario.Mushroom.prototype.collideCheck = function() {
+    var xMarioD = Mario.MarioCharacter.x - this.x, yMarioD = Mario.MarioCharacter.y - this.y;
     if (xMarioD > -16 && xMarioD < 16) {
-        if (yMarioD > -this.Height && yMarioD < Mario.MarioCharacter.Height) {
-            Mario.MarioCharacter.GetMushroom();
-            this.World.RemoveSprite(this);
+        if (yMarioD > -this.height && yMarioD < Mario.MarioCharacter.height) {
+            Mario.MarioCharacter.getMushroom();
+            this.world.removeSprite(this);
         }
     }
 };
 
-Mario.Mushroom.prototype.Move = function() {
-    if (this.Life < 9) {
-        this.Layer = 0;
-        this.Y--;
-        this.Life++;
+Mario.Mushroom.prototype.move = function() {
+    if (this.life < 9) {
+        this.layer = 0;
+        this.y--;
+        this.life++;
         return;
     }
     
     var sideWaysSpeed = 1.75;
-    this.Layer = 1;
+    this.layer = 1;
     
-    if (this.Xa > 2) {
-        this.Facing = 1;
+    if (this.xa > 2) {
+        this.facing = 1;
     }
-    if (this.Xa < -2) {
-        this.Facing = -1;
+    if (this.xa < -2) {
+        this.facing = -1;
     }
     
-    this.Xa = this.Facing * sideWaysSpeed;
+    this.xa = this.facing * sideWaysSpeed;
     
-    this.XFlip = this.Facing === -1;
-    this.RunTime += Math.abs(this.Xa) + 5;
+    this.xFlip = this.facing === -1;
+    this.runTime += Math.abs(this.xa) + 5;
     
-    if (!this.SubMove(this.Xa, 0)) {
-        this.Facing = -this.Facing;
+    if (!this.subMove(this.xa, 0)) {
+        this.facing = -this.facing;
     }
-    this.OnGround = false;
-    this.SubMove(0, this.Ya);
+    this.onGround = false;
+    this.subMove(0, this.ya);
     
-    this.Ya *= 0.85;
-    if (this.OnGround) {
-        this.Xa *= this.GroundInertia;
+    this.ya *= 0.85;
+    if (this.onGround) {
+        this.xa *= this.groundInertia;
     } else {
-        this.Xa *= this.AirInertia;
+        this.xa *= this.airInertia;
     }
     
-    if (!this.OnGround) {
-        this.Ya += 2;
+    if (!this.onGround) {
+        this.ya += 2;
     }
 };
 
-Mario.Mushroom.prototype.SubMove = function(xa, ya) {
+Mario.Mushroom.prototype.subMove = function(xa, ya) {
     var collide = false;
     
     while (xa > 8) {
-        if (!this.SubMove(8, 0)) {
+        if (!this.subMove(8, 0)) {
             return false;
         }
         xa -= 8;
     }
     while (xa < -8) {
-        if (!this.SubMove(-8, 0)) {
+        if (!this.subMove(-8, 0)) {
             return false;
         }
         xa += 8;
     }
     while (ya > 8) {
-        if (!this.SubMove(0, 8)) {
+        if (!this.subMove(0, 8)) {
             return false;
         }
         ya -= 8;
     }
     while (ya < -8) {
-        if (!this.SubMove(0, -8)) {
+        if (!this.subMove(0, -8)) {
             return false;
         }
         ya += 8;
     }
     
     if (ya > 0) {
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, 0)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, 0)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, 0)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa - this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
-        } else if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya + 1, xa, ya)) {
+        } else if (this.isBlocking(this.x + xa + this.width, this.y + ya + 1, xa, ya)) {
             collide = true;
         }
     }
     if (ya < 0) {
-        if (this.IsBlocking(this.X + xa, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
-        } else if (collide || this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        } else if (collide || this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
     }
     
     if (xa > 0) {
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa + this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, ya)) {
             collide = true;
         }
     }
     if (xa < 0) {
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - this.Height, xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya - ((this.Height / 2) | 0), xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya - ((this.height / 2) | 0), xa, ya)) {
             collide = true;
         }
-        if (this.IsBlocking(this.X + xa - this.Width, this.Y + ya, xa, ya)) {
+        if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, ya)) {
             collide = true;
         }
     }
     
     if (collide) {
         if (xa < 0) {
-            this.X = (((this.X - this.Width) / 16) | 0) * 16 + this.Width;
-            this.Xa = 0;
+            this.x = (((this.x - this.width) / 16) | 0) * 16 + this.width;
+            this.xa = 0;
         }
         if (xa > 0) {
-            this.X = (((this.X + this.Width) / 16 + 1) | 0) * 16 - this.Width - 1;
-            this.Xa = 0;
+            this.x = (((this.x + this.width) / 16 + 1) | 0) * 16 - this.width - 1;
+            this.xa = 0;
         }
         if (ya < 0) {
-            this.Y = (((this.Y - this.Height) / 16) | 0) * 16 + this.Height;
-            this.JumpTime = 0;
-            this.Ya = 0;
+            this.y = (((this.y - this.height) / 16) | 0) * 16 + this.height;
+            this.jumpTime = 0;
+            this.ya = 0;
         }
         if (ya > 0) {
-            this.Y = (((this.Y - 1) / 16 + 1) | 0) * 16 - 1;
-            this.OnGround = true;
+            this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
+            this.onGround = true;
         }
         
         return false;
     } else {
-        this.X += xa;
-        this.Y += ya;
+        this.x += xa;
+        this.y += ya;
         return true;
     }
 };
 
-Mario.Mushroom.prototype.IsBlocking = function(x, y, xa, ya) {
+Mario.Mushroom.prototype.isBlocking = function(x, y, xa, ya) {
     x = (x / 16) | 0;
     y = (y / 16) | 0;
     
-    if (x === (this.X / 16) | 0 && y === (this.Y / 16) | 0) {
+    if (x === (this.x / 16) | 0 && y === (this.y / 16) | 0) {
         return false;
     }
     
-    return this.World.Level.IsBlocking(x, y, xa, ya);
+    return this.world.level.isBlocking(x, y, xa, ya);
 };
 
-Mario.Mushroom.prototype.BumpCheck = function(x, y) {
-    if (this.X + this.Width > x * 16 && this.X - this.Width < x * 16 - 16 && y === ((y - 1) / 16) | 0) {
-        this.Facing = -Mario.MarioCharacter.Facing;
-        this.Ya = -10;
+Mario.Mushroom.prototype.bumpCheck = function(x, y) {
+    if (this.x + this.width > x * 16 && this.x - this.width < x * 16 - 16 && y === ((y - 1) / 16) | 0) {
+        this.facing = -Mario.MarioCharacter.facing;
+        this.ya = -10;
     }
 };

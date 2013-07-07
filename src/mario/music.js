@@ -2,7 +2,7 @@
 * Epic javascript midi hack, thanks a lot to blog post by John Resig.
 */
 
-Mario.PlayTitleMusic = function() {
+Mario.playTitleMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}
@@ -39,7 +39,7 @@ Mario.PlayTitleMusic = function() {
 	}
 };
 
-Mario.PlayMapMusic = function() {
+Mario.playMapMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}
@@ -76,7 +76,7 @@ Mario.PlayMapMusic = function() {
 	}
 };
 
-Mario.PlayOvergroundMusic = function() {
+Mario.playOvergroundMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}
@@ -113,7 +113,7 @@ Mario.PlayOvergroundMusic = function() {
 	}
 };
 
-Mario.PlayUndergroundMusic = function() {
+Mario.playUndergroundMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}
@@ -150,7 +150,7 @@ Mario.PlayUndergroundMusic = function() {
 	}
 };
 
-Mario.PlayCastleMusic = function() {
+Mario.playCastleMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}
@@ -187,7 +187,7 @@ Mario.PlayCastleMusic = function() {
 	}
 };
 
-Mario.StopMusic = function() {
+Mario.stopMusic = function() {
 	if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
 		return;
 	}

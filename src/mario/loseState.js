@@ -18,24 +18,26 @@ Mario.LoseState.prototype.enter = function() {
     this.camera = new Enjine.Camera();
     
     this.gameOver = new Enjine.AnimatedSprite();
-    this.gameOver.Image = Enjine.Resources.Images["gameOverGhost"];
-    this.gameOver.SetColumnCount(9);
-    this.gameOver.SetRowCount(1);
-    this.gameOver.AddNewSequence("turnLoop", 0, 0, 0, 8);
-    this.gameOver.PlaySequence("turnLoop", true);
-    this.gameOver.FramesPerSecond = 1/15;
-    this.gameOver.X = 112;
-    this.gameOver.Y = 68;
+    this.gameOver.image = Enjine.Resources.images["gameOverGhost"];
+    this.gameOver.setColumnCount(9);
+    this.gameOver.setRowCount(1);
+    this.gameOver.addNewSequence("turnLoop", 0, 0, 0, 8);
+    this.gameOver.playSequence("turnLoop", true);
+    this.gameOver.framesPerSecond = 1/15;
+    this.gameOver.x = 112;
+    this.gameOver.y = 68;
+    this.gameOver.xPivot = 0;
+    this.gameOver.yPivot = 0;
     
-    this.font = Mario.SpriteCuts.CreateBlackFont();
-    this.font.Strings[0] = { String: "Game over!", X: 116, Y: 160 };
+    this.font = Mario.SpriteCuts.createBlackFont();
+    this.font.strings[0] = { string: "Game over!", x: 116, y: 160 };
     
-    this.drawManager.Add(this.font);
-    this.drawManager.Add(this.gameOver);
+    this.drawManager.add(this.font);
+    this.drawManager.add(this.gameOver);
 };
 
 Mario.LoseState.prototype.exit = function() {
-    this.drawManager.Clear();
+    this.drawManager.clear();
     delete this.drawManager;
     delete this.camera;
     delete this.gameOver;
@@ -43,18 +45,18 @@ Mario.LoseState.prototype.exit = function() {
 };
 
 Mario.LoseState.prototype.update = function(delta) {
-    this.drawManager.Update(delta);
-    if (Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
+    this.drawManager.update(delta);
+    if (Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
         this.wasKeyDown = true;
     }
 };
 
 Mario.LoseState.prototype.draw = function(context) {
-    this.drawManager.Draw(context, this.camera);
+    this.drawManager.draw(context, this.camera);
 };
 
 Mario.LoseState.prototype.checkForChange = function(context) {
-    if (this.wasKeyDown && !Enjine.KeyboardInput.IsKeyDown(Enjine.Keys.S)) {
-        context.ChangeState(new Mario.TitleState());
+    if (this.wasKeyDown && !Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
+        context.changeState(new Mario.TitleState());
     }
 };

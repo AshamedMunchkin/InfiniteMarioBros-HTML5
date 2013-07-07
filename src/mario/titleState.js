@@ -17,10 +17,10 @@ Mario.TitleState.prototype.enter = function() {
     this.drawManager = new Enjine.DrawableManager();
     this.camera = new Enjine.Camera();
     
-    var bgGenerator = new Mario.BackgroundGenerator(2048, 15, true, Mario.LevelType.Overground);
-    var bgLayer0 = new Mario.BackgroundRenderer(bgGenerator.CreateLevel(), 320, 240, 2);
-    bgGenerator.SetValues(2048, 15, false, Mario.LevelType.Overground);
-    var bgLayer1 = new Mario.BackgroundRenderer(bgGenerator.CreateLevel(), 320, 240, 1);
+    var bgGenerator = new Mario.BackgroundGenerator(2048, 15, true, Mario.LevelType.overground);
+    var bgLayer0 = new Mario.BackgroundRenderer(bgGenerator.createLevel(), 320, 240, 2);
+    bgGenerator.setValues(2048, 15, false, Mario.LevelType.overground);
+    var bgLayer1 = new Mario.BackgroundRenderer(bgGenerator.createLevel(), 320, 240, 1);
     
     this.title = new Enjine.Sprite();
     this.title.image = Enjine.Resources.images["title"];
@@ -30,7 +30,7 @@ Mario.TitleState.prototype.enter = function() {
     this.logo.image = Enjine.Resources.images["logo"];
     this.logo.x = 0, this.logo.y = 0;
     
-    this.font = Mario.SpriteCuts.CreateRedFont();
+    this.font = Mario.SpriteCuts.createRedFont();
     this.font.strings[0] = { string: "Press S to Start", x: 96, y: 120 };
 
     this.logoY = 20;
@@ -40,10 +40,10 @@ Mario.TitleState.prototype.enter = function() {
     
     this.bounce = 0;
 	
-	Mario.GlobalMapState = new Mario.MapState();
+	Mario.globalMapState = new Mario.MapState();
 	//set up the global main character variable
 	Mario.MarioCharacter = new Mario.Character();
-	Mario.MarioCharacter.Image = Enjine.Resources.images["smallMario"];
+	Mario.MarioCharacter.image = Enjine.Resources.images["smallMario"];
 	
 	//Mario.PlayTitleMusic();
 };
@@ -77,6 +77,6 @@ Mario.TitleState.prototype.draw = function(context) {
 
 Mario.TitleState.prototype.checkForChange = function(context) {
     if (Enjine.Keyboard.isKeyDown(Enjine.Keys.s)) {
-        context.changeState(Mario.GlobalMapState);
+        context.changeState(Mario.globalMapState);
     }
 };
