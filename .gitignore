@@ -1,22 +1,5 @@
-#############
-## Compiled files
-#############
-
-bin/
-
-#############
-## Windows detritus
-#############
-
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
-
-# Folder config file
-Desktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Mac crap
-.DS_Store
+node_modules
+dist
+.tmp
+.sass-cache
+app/bower_components
