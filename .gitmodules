@@ -1,0 +1,3 @@
+[submodule "app/scripts/enjine"]
+	path = app/scripts/enjine
+	url = https://github.com/AshamedMunchkin/Enjine.git
