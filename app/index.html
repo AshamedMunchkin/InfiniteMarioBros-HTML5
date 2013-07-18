@@ -27,69 +27,15 @@
 		<![endif]-->
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-		<script>
+		<!-- <script>
 			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
 			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
 			g.src='//www.google-analytics.com/ga.js';
 			s.parentNode.insertBefore(g,s)}(document,'script'));
-		</script>
+		</script> -->
 
 		<!-- build:js scripts/main.js -->
-		<!-- <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script> -->
+		<script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
 		<!-- endbuild -->
-
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-		<!-- Enjine Includes -->
-		<script src="scripts/enjine/core.js"></script>
-		<script src="scripts/enjine/gamecanvas.js"></script>
-		<script src="scripts/enjine/keyboard.js"></script>
-		<script src="scripts/enjine/resources.js"></script>
-		<script src="scripts/enjine/drawable.js"></script>
-		<script src="scripts/enjine/state.js"></script>
-		<script src="scripts/enjine/gametimer.js"></script>
-		<script src="scripts/enjine/camera.js"></script>
-		<script src="scripts/enjine/drawablemanager.js"></script>
-		<script src="scripts/enjine/sprite.js"></script>
-		<script src="scripts/enjine/spritefont.js"></script>
-		<script src="scripts/enjine/framesprite.js"></script>
-		<script src="scripts/enjine/animatedsprite.js"></script>
-		<script src="scripts/enjine/application.js"></script>
-		<script src="scripts/enjine/mouse.js"></script>
-		<script src="scripts/enjine/vector2.js"></script>
-		
-		<!-- Actual game code -->
-		<script src="scripts/mario/setup.js"></script>
-		<script src="scripts/mario/spriteCuts.js"></script>
-		<script src="scripts/mario/level.js"></script>
-		<script src="scripts/mario/backgroundGenerator.js"></script>
-		<script src="scripts/mario/backgroundRenderer.js"></script>
-		<script src="scripts/mario/improvedNoise.js"></script>
-		<script src="scripts/mario/notchSprite.js"></script>
-		<script src="scripts/mario/character.js"></script>
-		<script src="scripts/mario/levelRenderer.js"></script>
-		<script src="scripts/mario/levelGenerator.js"></script>
-		<script src="scripts/mario/spriteTemplate.js"></script>
-		<script src="scripts/mario/enemy.js"></script>
-		<script src="scripts/mario/fireball.js"></script>
-		<script src="scripts/mario/sparkle.js"></script>
-		<script src="scripts/mario/coinAnim.js"></script>
-		<script src="scripts/mario/mushroom.js"></script>
-		<script src="scripts/mario/particle.js"></script>
-		<script src="scripts/mario/fireFlower.js"></script>
-		<script src="scripts/mario/bulletBill.js"></script>
-		<script src="scripts/mario/flowerEnemy.js"></script>
-		<script src="scripts/mario/shell.js"></script>
-		
-		<script src="scripts/mario/titleState.js"></script>
-		<script src="scripts/mario/loadingState.js"></script>
-		<script src="scripts/mario/loseState.js"></script>
-		<script src="scripts/mario/winState.js"></script>
-		<script src="scripts/mario/mapState.js"></script>
-		<script src="scripts/mario/levelState.js"></script>
-		
-		<script src="scripts/mario/music.js"></script>
-
-		<script>$(document).ready(function() { new Enjine.Application().initialize('canvas', new Mario.LoadingState(), 320, 240) });</script>
 </body>
 </html>
