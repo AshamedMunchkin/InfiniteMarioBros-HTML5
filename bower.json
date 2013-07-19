@@ -1,0 +1,10 @@
+{
+  "name": "infinitemariobros",
+  "version": "0.0.0",
+  "dependencies": {
+    "requirejs": "~2.x.x",
+    "modernizr": "~2.x.x",
+    "jquery": "~1.x.x"
+  },
+  "devDependencies": {}
+}
