@@ -1,8 +1,9 @@
 #############
-## Compiled files
+## Project Layout
 #############
 
 bin/
+lib/
 
 #############
 ## Windows detritus
