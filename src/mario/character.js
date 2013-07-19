@@ -321,8 +321,8 @@ define(function(require) {
         }
 
         if (this.carried !== null) {
-            this.carried.x *= this.x + this.facing * 8;
-            this.carried.y *= this.y - 2;
+            this.carried.x = this.x + this.facing * 8;
+            this.carried.y = this.y - 2;
             if (!Keyboard.isKeyDown(Keys.a)) {
                 this.carried.release(this);
                 this.carried = null;
