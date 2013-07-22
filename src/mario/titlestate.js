@@ -26,6 +26,7 @@ define(function(require, exports) {
     var TitleState = function() {
         this.drawManager = null;
         this.camera = null;
+        this.fontCamera = null;
         this.logoY = null;
         this.bounce = null;
         this.font = null;
@@ -36,6 +37,7 @@ define(function(require, exports) {
     TitleState.prototype.enter = function() {
         this.drawManager = new DrawableManager();
         this.camera = new Camera();
+        this.fontCamera = new Camera();
 
         var bgGenerator = new BackgroundGenerator(2048, 15, true, LevelType.overground);
         var bgLayer0 = new BackgroundRenderer(bgGenerator.createLevel(), 320, 240, 2);
@@ -76,6 +78,7 @@ define(function(require, exports) {
         this.drawManager.clear();
         delete this.drawManager;
         delete this.camera;
+        delete this.fontCamera;
         delete this.font;
     };
 
@@ -94,7 +97,7 @@ define(function(require, exports) {
         context.drawImage(Resources.images.title, 0, 120);
         context.drawImage(Resources.images.logo, 0, this.logoY);
 
-        this.font.draw(context, this.camera);
+        this.font.draw(context, this.fontCamera);
     };
 
     TitleState.prototype.checkForChange = function(context) {

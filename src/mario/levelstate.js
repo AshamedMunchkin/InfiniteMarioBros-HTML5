@@ -41,6 +41,7 @@ define(function(require, exports) {
         this.spritesToAdd = null;
         this.spritesToRemove = null;
         this.camera = null;
+        this.fontCamera = null;
         this.shellsToCheck = null;
         this.fireballsToCheck = null;
 
@@ -77,6 +78,7 @@ define(function(require, exports) {
         this.layer = new LevelRenderer(this.level, 320, 240);
         this.sprites = new DrawableManager();
         this.camera = new Camera();
+        this.fontCamera = new Camera();
         this.tick = 0;
 
         this.shellsToCheck = [];
@@ -112,6 +114,7 @@ define(function(require, exports) {
         delete this.bgLayer;
         delete this.sprites;
         delete this.camera;
+        delete this.fontCamera;
         delete this.shellsToCheck;
         delete this.fireballsToCheck;
         delete this.fontShadow;
@@ -368,8 +371,8 @@ define(function(require, exports) {
     LevelState.prototype.drawStringShadow = function(context, string, x, y) {
         this.font.strings[0] = { string: string, x: x * 8 + 4, y: y * 8 + 4 };
         this.fontShadow.strings[0] = { string: string, x: x * 8 + 5, y: y * 8 + 5 };
-        this.fontShadow.draw(context, this.camera);
-        this.font.draw(context, this.camera);
+        this.fontShadow.draw(context, this.fontCamera);
+        this.font.draw(context, this.fontCamera);
     };
 
     LevelState.prototype.renderBlackout = function(context, x, y, radius) {
